@@ -1,0 +1,1007 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.3
+-- Dumped by pg_dump version 9.5.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE auth_group (
+    id integer NOT NULL,
+    name character varying(80) NOT NULL
+);
+
+
+ALTER TABLE auth_group OWNER TO caliperuser;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_id_seq OWNER TO caliperuser;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_group_permissions OWNER TO caliperuser;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_group_permissions_id_seq OWNER TO caliperuser;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE auth_permission OWNER TO caliperuser;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_permission_id_seq OWNER TO caliperuser;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE auth_user OWNER TO caliperuser;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_user_groups OWNER TO caliperuser;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_groups_id_seq OWNER TO caliperuser;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_id_seq OWNER TO caliperuser;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE auth_user_user_permissions OWNER TO caliperuser;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE auth_user_user_permissions_id_seq OWNER TO caliperuser;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE django_admin_log OWNER TO caliperuser;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_admin_log_id_seq OWNER TO caliperuser;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE django_content_type OWNER TO caliperuser;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_content_type_id_seq OWNER TO caliperuser;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_migrations OWNER TO caliperuser;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE django_migrations_id_seq OWNER TO caliperuser;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE django_session OWNER TO caliperuser;
+
+--
+-- Name: task_task; Type: TABLE; Schema: public; Owner: caliperuser
+--
+
+CREATE TABLE task_task (
+    id integer NOT NULL,
+    name character varying(200) NOT NULL,
+    configuration jsonb NOT NULL,
+    results jsonb NOT NULL,
+    output_path character varying(500) NOT NULL
+);
+
+
+ALTER TABLE task_task OWNER TO caliperuser;
+
+--
+-- Name: task_task_id_seq; Type: SEQUENCE; Schema: public; Owner: caliperuser
+--
+
+CREATE SEQUENCE task_task_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE task_task_id_seq OWNER TO caliperuser;
+
+--
+-- Name: task_task_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: caliperuser
+--
+
+ALTER SEQUENCE task_task_id_seq OWNED BY task_task.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY task_task ALTER COLUMN id SET DEFAULT nextval('task_task_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can add group	2	add_group
+5	Can change group	2	change_group
+6	Can delete group	2	delete_group
+7	Can add permission	3	add_permission
+8	Can change permission	3	change_permission
+9	Can delete permission	3	delete_permission
+10	Can add user	4	add_user
+11	Can change user	4	change_user
+12	Can delete user	4	delete_user
+13	Can add content type	5	add_contenttype
+14	Can change content type	5	change_contenttype
+15	Can delete content type	5	delete_contenttype
+16	Can add session	6	add_session
+17	Can change session	6	change_session
+18	Can delete session	6	delete_session
+19	Can add task	7	add_task
+20	Can change task	7	change_task
+21	Can delete task	7	delete_task
+22	Can add task	8	add_task
+23	Can change task	8	change_task
+24	Can delete task	8	delete_task
+\.
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('auth_permission_id_seq', 24, true);
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+1	pbkdf2_sha256$36000$SOCks1gKKOO7$mEiWLADMzfOdgpJbChxKPr35uoCNpCibGUdAj0OsbZY=	2017-08-24 15:16:13.525+08	f	zhangxj				f	t	2017-08-24 15:14:02.075+08
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('auth_user_id_seq', 1, true);
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('django_admin_log_id_seq', 1, false);
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	group
+3	auth	permission
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	compare	task
+8	task	task
+\.
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('django_content_type_id_seq', 8, true);
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2017-08-24 12:04:20.152+08
+2	auth	0001_initial	2017-08-24 12:04:20.922+08
+3	admin	0001_initial	2017-08-24 12:04:21.059+08
+4	admin	0002_logentry_remove_auto_add	2017-08-24 12:04:21.088+08
+5	contenttypes	0002_remove_content_type_name	2017-08-24 12:04:21.133+08
+6	auth	0002_alter_permission_name_max_length	2017-08-24 12:04:21.149+08
+7	auth	0003_alter_user_email_max_length	2017-08-24 12:04:21.17+08
+8	auth	0004_alter_user_username_opts	2017-08-24 12:04:21.183+08
+9	auth	0005_alter_user_last_login_null	2017-08-24 12:04:21.197+08
+10	auth	0006_require_contenttypes_0002	2017-08-24 12:04:21.201+08
+11	auth	0007_alter_validators_add_error_messages	2017-08-24 12:04:21.213+08
+12	auth	0008_alter_user_username_max_length	2017-08-24 12:04:21.257+08
+13	compare	0001_initial	2017-08-24 12:04:21.326+08
+14	sessions	0001_initial	2017-08-24 12:04:21.462+08
+15	compare	0002_delete_task	2017-08-24 12:06:24.352+08
+16	task	0001_initial	2017-08-24 12:06:24.427+08
+\.
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('django_migrations_id_seq', 16, true);
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY django_session (session_key, session_data, expire_date) FROM stdin;
+kogdmt1xkerm0c966y92saopsm83zge1	ZWI0ODE5ODRmNzY4N2VkOGRkZWQ1MjY1ZWRiYWMwNjk2ZTg5YTJhMTp7Il9hdXRoX3VzZXJfaGFzaCI6ImRmYzIyOGM5MzA4MTI3OWQxMTc1MjE4Mjk3MjJkOGFkMWIxNzgyMGYiLCJfYXV0aF91c2VyX2lkIjoiMSIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=	2017-09-07 15:16:13.528+08
+\.
+
+
+--
+-- Data for Name: task_task; Type: TABLE DATA; Schema: public; Owner: caliperuser
+--
+
+COPY task_task (id, name, configuration, results, output_path) FROM stdin;
+1	D05-Sailing-V1	{"CPU": "64", "Memory": "523535MB", "CPU_type": "*TBA", "Hostname": "D05-Sailing-V1", "L2_cache": "8192 kB", "L3_cache": "32768 kB", "L1d_cache": "1024 kB", "L1i_cache": "1536 kB", "Byte_order": "Little Endian", "OS_Version": "Linux 4.9.20+", "Machine_arch": "aarch64"}	{"Functional": {}, "Performance": {"memory": {"bandwidth": {"Point_Scores": {"cachebench_rmw": 100.0, "cachebench_read": 100.0, "cachebench_write": 89.09}, "Total_Scores": 100.0}, "local_speed": {"Point_Scores": {"TCP": 67.94, "Pipe": 100.0, "Bzero": 100.0, "AF_Unix": 94.49, "Mem_read": 57.42, "Mem_write": 100.0, "Bcopy(hand)": 100.0, "Bcopy(libc)": 61.28, "File_reread": 79.64, "Mmap_reread": 35.74, "Bcopy(libc_a)": 61.05, "Mem_RW_partial": 39.81, "Mmap_open2close": 61.02, "Mem_read_partial": 39.81, "Mem_write_partial": 64.38, "Reread_open2close": 80.04, "BCopy(hand_partial)": 89.78}, "Total_Scores": 74.28}, "Total_Scores": 79.92, "tiny_latency": {"Point_Scores": {"Hugepage_dual_random_read": 68.1, "Hugepage_single_random_read": 75.89, "No_Hugepage_dual_random_read": 68.1, "No_Hugepage_single_random_read": 75.89}, "Total_Scores": 71.89}, "tiny_bandwidth": {"Point_Scores": {"C_copy": 100.0, "C_fill": 68.02, "C_2-pass_copy": 99.29, "standard_memcpy": 55.5, "standard_memset": 60.03, "C_copy_backwards": 100.0, "C_copy_prefetched_32B": 100.0, "C_copy_prefetched_64B": 100.0, "C_2-pass_copy_prefetched_32B": 100.0, "C_2-pass_copy_prefetched_64B": 100.0}, "Total_Scores": 98.58}, "lb_bw_stream_v1": {"Point_Scores": {"add": 100.0, "copy": 100.0, "scale": 100.0, "triad": 100.0}, "Total_Scores": 100.0}, "lb_bw_stream_v2": {"Point_Scores": {"sum": 90.71, "copy": 100.0, "fill": 100.0, "daxpy": 100.0}, "Total_Scores": 100.0}, "lb_bw_cross_01_core": {"Point_Scores": {"copy": 61.63, "read": 15.1, "bcopy": 26.8, "bzero": 34.67, "fcopy": 84.53, "fread": 30.18, "write": 18.33, "fwrite": 72.83, "readwrite": 8.11}, "Total_Scores": 30.63}, "lb_bw_cross_04_core": {"Point_Scores": {"copy": 27.84, "read": 21.66, "bcopy": 23.05, "bzero": 33.57, "fcopy": 39.59, "fread": 20.68, "write": 32.08, "fwrite": 34.59, "readwrite": 10.94}, "Total_Scores": 25.71}, "lb_bw_cross_16_core": {"Point_Scores": {"copy": 44.62, "read": 26.16, "bcopy": 46.06, "bzero": 91.45, "fcopy": 58.64, "fread": 26.57, "write": 59.32, "fwrite": 91.38, "readwrite": 41.55}, "Total_Scores": 51.29}, "lb_bw_local_01_core": {"Point_Scores": {"copy": 90.65, "read": 26.65, "bcopy": 50.8, "bzero": 59.21, "fcopy": 100.0, "fread": 47.43, "write": 35.7, "fwrite": 100.0, "readwrite": 22.36}, "Total_Scores": 54.15}, "lb_bw_local_04_core": {"Point_Scores": {"copy": 41.65, "read": 32.23, "bcopy": 27.87, "bzero": 72.32, "fcopy": 77.3, "fread": 33.12, "write": 53.33, "fwrite": 94.15, "readwrite": 23.03}, "Total_Scores": 45.53}, "lb_bw_local_16_core": {"Point_Scores": {"copy": 72.25, "read": 39.03, "bcopy": 57.26, "bzero": 99.43, "fcopy": 90.17, "fread": 39.12, "write": 64.81, "fwrite": 100.0, "readwrite": 46.08}, "Total_Scores": 68.36}, "lb_bw_local_32_core": {"Point_Scores": {"copy": 58.49, "read": 46.19, "bcopy": 48.08, "bzero": 79.86, "fcopy": 78.87, "fread": 48.79, "write": 59.84, "fwrite": 100.0, "readwrite": 51.07}, "Total_Scores": 63.98}, "lb_bw_local_64_core": {"Point_Scores": {"copy": 100.0, "read": 94.3, "bcopy": 100.0, "bzero": 100.0, "fcopy": 100.0, "fread": 95.63, "write": 100.0, "fwrite": 100.0, "readwrite": 100.0}, "Total_Scores": 100.0}, "lb_lat_cross_01_core": {"Point_Scores": {"lb_lat_02_2KB": 100.0, "lb_lat_03_3KB": 100.0, "lb_lat_04_4KB": 100.0, "lb_lat_05_6KB": 100.0, "lb_lat_06_8KB": 100.0, "lb_lat_20_1MB": 100.0, "lb_lat_22_2MB": 91.67, "lb_lat_23_3MB": 86.11, "lb_lat_24_4MB": 84.72, "lb_lat_25_6MB": 83.33, "lb_lat_26_8MB": 76.06, "lb_lat_01_01KB": 100.0, "lb_lat_07_12KB": 100.0, "lb_lat_08_16KB": 100.0, "lb_lat_09_24KB": 100.0, "lb_lat_10_32KB": 100.0, "lb_lat_11_48KB": 100.0, "lb_lat_12_64KB": 82.22, "lb_lat_13_96KB": 82.96, "lb_lat_27_12MB": 49.3, "lb_lat_28_16MB": 33.8, "lb_lat_29_24MB": 27.14, "lb_lat_30_32MB": 26.87, "lb_lat_00_0.5KB": 100.0, "lb_lat_14_128KB": 85.19, "lb_lat_15_192KB": 100.0, "lb_lat_16_256KB": 100.0, "lb_lat_17_384KB": 100.0, "lb_lat_18_512KB": 100.0, "lb_lat_19_768KB": 100.0, "lb_lat_21_1.5MB": 95.83}, "Total_Scores": 92.44}, "lb_lat_cross_04_core": {"Point_Scores": {"lb_lat_02_2KB": 100.0, "lb_lat_03_3KB": 100.0, "lb_lat_04_4KB": 100.0, "lb_lat_05_6KB": 100.0, "lb_lat_06_8KB": 100.0, "lb_lat_20_1MB": 81.94, "lb_lat_22_2MB": 79.17, "lb_lat_23_3MB": 56.94, "lb_lat_24_4MB": 36.62, "lb_lat_25_6MB": 26.76, "lb_lat_26_8MB": 26.09, "lb_lat_01_01KB": 100.0, "lb_lat_07_12KB": 100.0, "lb_lat_08_16KB": 100.0, "lb_lat_09_24KB": 100.0, "lb_lat_10_32KB": 100.0, "lb_lat_11_48KB": 100.0, "lb_lat_12_64KB": 63.7, "lb_lat_13_96KB": 62.22, "lb_lat_27_12MB": 23.94, "lb_lat_28_16MB": 24.29, "lb_lat_29_24MB": 62.96, "lb_lat_30_32MB": 59.26, "lb_lat_00_0.5KB": 100.0, "lb_lat_14_128KB": 60.0, "lb_lat_15_192KB": 62.22, "lb_lat_16_256KB": 84.21, "lb_lat_17_384KB": 88.0, "lb_lat_18_512KB": 86.3, "lb_lat_19_768KB": 84.72, "lb_lat_21_1.5MB": 81.94}, "Total_Scores": 74.11}, "lb_lat_cross_16_core": {"Point_Scores": {"lb_lat_02_2KB": 100.0, "lb_lat_03_3KB": 100.0, "lb_lat_04_4KB": 100.0, "lb_lat_05_6KB": 100.0, "lb_lat_06_8KB": 100.0, "lb_lat_20_1MB": 69.86, "lb_lat_22_2MB": 27.78, "lb_lat_23_3MB": 24.66, "lb_lat_24_4MB": 23.29, "lb_lat_25_6MB": 24.64, "lb_lat_26_8MB": 24.64, "lb_lat_01_01KB": 100.0, "lb_lat_07_12KB": 100.0, "lb_lat_08_16KB": 100.0, "lb_lat_09_24KB": 100.0, "lb_lat_10_32KB": 100.0, "lb_lat_11_48KB": 100.0, "lb_lat_12_64KB": 65.93, "lb_lat_13_96KB": 61.48, "lb_lat_27_12MB": 22.86, "lb_lat_28_16MB": 48.48, "lb_lat_29_24MB": 48.48, "lb_lat_30_32MB": 48.48, "lb_lat_00_0.5KB": 100.0, "lb_lat_14_128KB": 62.22, "lb_lat_15_192KB": 61.36, "lb_lat_16_256KB": 72.07, "lb_lat_17_384KB": 82.28, "lb_lat_18_512KB": 86.67, "lb_lat_19_768KB": 86.3, "lb_lat_21_1.5MB": 34.25}, "Total_Scores": 64.91}, "lb_lat_local_01_core": {"Point_Scores": {"lb_lat_02_2KB": 100.0, "lb_lat_03_3KB": 100.0, "lb_lat_04_4KB": 100.0, "lb_lat_05_6KB": 100.0, "lb_lat_06_8KB": 100.0, "lb_lat_20_1MB": 100.0, "lb_lat_22_2MB": 93.06, "lb_lat_23_3MB": 84.72, "lb_lat_24_4MB": 84.72, "lb_lat_25_6MB": 83.33, "lb_lat_26_8MB": 79.17, "lb_lat_01_01KB": 100.0, "lb_lat_07_12KB": 100.0, "lb_lat_08_16KB": 100.0, "lb_lat_09_24KB": 100.0, "lb_lat_10_32KB": 100.0, "lb_lat_11_48KB": 100.0, "lb_lat_12_64KB": 82.22, "lb_lat_13_96KB": 82.22, "lb_lat_27_12MB": 61.97, "lb_lat_28_16MB": 47.89, "lb_lat_29_24MB": 39.13, "lb_lat_30_32MB": 38.81, "lb_lat_00_0.5KB": 100.0, "lb_lat_14_128KB": 87.12, "lb_lat_15_192KB": 100.0, "lb_lat_16_256KB": 100.0, "lb_lat_17_384KB": 100.0, "lb_lat_18_512KB": 100.0, "lb_lat_19_768KB": 100.0, "lb_lat_21_1.5MB": 95.83}, "Total_Scores": 96.64}, "lb_lat_local_04_core": {"Point_Scores": {"lb_lat_02_2KB": 100.0, "lb_lat_03_3KB": 100.0, "lb_lat_04_4KB": 100.0, "lb_lat_05_6KB": 100.0, "lb_lat_06_8KB": 100.0, "lb_lat_20_1MB": 79.17, "lb_lat_22_2MB": 76.39, "lb_lat_23_3MB": 62.5, "lb_lat_24_4MB": 50.0, "lb_lat_25_6MB": 38.57, "lb_lat_26_8MB": 35.71, "lb_lat_01_01KB": 100.0, "lb_lat_07_12KB": 100.0, "lb_lat_08_16KB": 100.0, "lb_lat_09_24KB": 100.0, "lb_lat_10_32KB": 100.0, "lb_lat_11_48KB": 100.0, "lb_lat_12_64KB": 65.19, "lb_lat_13_96KB": 64.44, "lb_lat_27_12MB": 34.29, "lb_lat_28_16MB": 36.92, "lb_lat_29_24MB": 70.59, "lb_lat_30_32MB": 70.59, "lb_lat_00_0.5KB": 100.0, "lb_lat_14_128KB": 63.7, "lb_lat_15_192KB": 57.78, "lb_lat_16_256KB": 74.49, "lb_lat_17_384KB": 86.49, "lb_lat_18_512KB": 86.11, "lb_lat_19_768KB": 83.33, "lb_lat_21_1.5MB": 79.17}, "Total_Scores": 78.76}, "lb_lat_local_16_core": {"Point_Scores": {"lb_lat_02_2KB": 100.0, "lb_lat_03_3KB": 100.0, "lb_lat_04_4KB": 100.0, "lb_lat_05_6KB": 100.0, "lb_lat_06_8KB": 100.0, "lb_lat_20_1MB": 82.19, "lb_lat_22_2MB": 39.73, "lb_lat_23_3MB": 35.62, "lb_lat_24_4MB": 35.21, "lb_lat_25_6MB": 34.78, "lb_lat_26_8MB": 35.82, "lb_lat_01_01KB": 100.0, "lb_lat_07_12KB": 100.0, "lb_lat_08_16KB": 100.0, "lb_lat_09_24KB": 100.0, "lb_lat_10_32KB": 100.0, "lb_lat_11_48KB": 100.0, "lb_lat_12_64KB": 65.93, "lb_lat_13_96KB": 62.96, "lb_lat_27_12MB": 34.29, "lb_lat_28_16MB": 72.73, "lb_lat_29_24MB": 69.7, "lb_lat_30_32MB": 69.7, "lb_lat_00_0.5KB": 100.0, "lb_lat_14_128KB": 60.74, "lb_lat_15_192KB": 59.26, "lb_lat_16_256KB": 69.91, "lb_lat_17_384KB": 83.33, "lb_lat_18_512KB": 90.41, "lb_lat_19_768KB": 78.08, "lb_lat_21_1.5MB": 46.58}, "Total_Scores": 72.81}, "lb_lat_local_32_core": {"Point_Scores": {"lb_lat_02_2KB": 100.0, "lb_lat_03_3KB": 100.0, "lb_lat_04_4KB": 100.0, "lb_lat_05_6KB": 100.0, "lb_lat_06_8KB": 100.0, "lb_lat_20_1MB": 79.17, "lb_lat_22_2MB": 40.85, "lb_lat_23_3MB": 34.72, "lb_lat_24_4MB": 35.21, "lb_lat_25_6MB": 33.8, "lb_lat_26_8MB": 75.0, "lb_lat_01_01KB": 100.0, "lb_lat_07_12KB": 100.0, "lb_lat_08_16KB": 100.0, "lb_lat_09_24KB": 100.0, "lb_lat_10_32KB": 100.0, "lb_lat_11_48KB": 100.0, "lb_lat_12_64KB": 64.44, "lb_lat_13_96KB": 65.19, "lb_lat_27_12MB": 71.88, "lb_lat_28_16MB": 71.88, "lb_lat_29_24MB": 71.88, "lb_lat_30_32MB": 71.88, "lb_lat_00_0.5KB": 100.0, "lb_lat_14_128KB": 62.96, "lb_lat_15_192KB": 61.48, "lb_lat_16_256KB": 82.0, "lb_lat_17_384KB": 84.62, "lb_lat_18_512KB": 87.84, "lb_lat_19_768KB": 86.11, "lb_lat_21_1.5MB": 54.93}, "Total_Scores": 77.57}}, "latency": {"ctx": {"Point_Scores": {"02p/0K_ctxsw": 100.0, "02p/16K_ctxsw": 100.0, "02p/64K_ctxsw": 100.0, "08p/16K_ctxsw": 95.43, "08p/64K_ctxsw": 97.74, "16p/16K_ctxsw": 100.0, "16p/64K_ctxsw": 97.13}, "Total_Scores": 100.0}, "file/vm": {"Point_Scores": {"Mmap(KB)": 100.0, "Prot_fault": 100.0, "100fd_select": 87.5, "0k_file_create": 73.81, "0k_file_delete": 73.2, "10k_file_create": 77.91, "10k_file_delete": 68.07}, "Total_Scores": 88.27}, "process": {"Point_Scores": {"stat": 80.17, "null_IO": 70.84, "sh_proc": 62.73, "sig_hndl": 93.49, "sig_inst": 72.03, "slct_TCP": 92.0, "exec_proc": 70.59, "fork_proc": 57.14, "null_call": 54.21, "open_close": 79.32}, "Total_Scores": 73.1}, "Total_Scores": 88.17}, "network": {"bandwidth": {"Point_Scores": {"TCP_RR": 68.8, "UDP_RR": 64.66, "TCP_CRR": 60.24, "TCP_s01_RX": 100.0, "TCP_s01_TX": 100.0, "TCP_s03_RX": 100.0, "TCP_s03_TX": 100.0, "TCP_s04_RX": 100.0, "TCP_s04_TX": 100.0, "TCP_s05_RX": 100.0, "TCP_s05_TX": 100.0, "TCP_s10_RX": 100.0, "TCP_s10_TX": 100.0, "TCP_stream": 100.0, "UDP_s01_RX": 76.16, "UDP_s01_TX": 33.98, "UDP_s03_RX": 92.84, "UDP_s03_TX": 40.89, "UDP_s05_RX": 83.7, "UDP_s05_TX": 39.93, "UDP_s10_RX": 80.56, "UDP_s10_TX": 32.93, "TCP_stream_r": 100.0, "TCP_bw_000001B": 93.75, "TCP_bw_000002B": 96.88, "TCP_bw_000004B": 96.83, "TCP_bw_000008B": 93.7, "TCP_bw_000016B": 95.1, "TCP_bw_000032B": 91.97, "TCP_bw_000064B": 94.47, "TCP_bw_000128B": 92.41, "TCP_bw_000256B": 94.42, "TCP_bw_000512B": 100.0, "TCP_bw_001000B": 84.76, "TCP_bw_002000B": 100.0, "TCP_bw_004000B": 100.0, "TCP_bw_008000B": 100.0, "TCP_bw_016000B": 100.0, "TCP_bw_032000B": 100.0, "TCP_bw_064000B": 100.0}, "Total_Scores": 92.03}, "local_lat": {"Point_Scores": {"TCP": 75.29, "UDP": 76.6, "Pipe": 97.41, "AF_Unix": 93.16, "TCP_con": 69.7, "TCP_lat_000001B": 83.1, "TCP_lat_000002B": 83.1, "TCP_lat_000004B": 83.1, "TCP_lat_000008B": 83.1, "TCP_lat_000016B": 81.69, "TCP_lat_000032B": 84.29, "TCP_lat_000064B": 84.29, "TCP_lat_000128B": 82.86, "TCP_lat_000256B": 89.39, "TCP_lat_000512B": 90.77, "TCP_lat_001000B": 95.08, "TCP_lat_002000B": 91.84, "TCP_lat_004000B": 77.55, "TCP_lat_008000B": 71.43, "TCP_lat_016000B": 87.18, "TCP_lat_032000B": 80.0, "TCP_lat_064000B": 88.89}, "Total_Scores": 84.13}, "Total_Scores": 88.02}, "storage": {"iops": {"Point_Scores": {"fio_read": 28.85, "fio_write": 33.02, "fio_randread": 1.23, "fio_randwrite": 1.96}, "Total_Scores": 6.92}, "bandwidth": {"Point_Scores": {"fio_read": 29.23, "fio_write": 31.18, "fio_randread": 1.42, "fio_randwrite": 2.0}, "Total_Scores": 7.13}, "Total_Scores": 20.0, "Iozone-Cached": {"Point_Scores": {"read": 82.43, "fread": 85.86, "write": 100.0, "fwrite": 100.0, "reread": 79.73, "freread": 85.54, "rewrite": 100.0, "frewrite": 100.0, "bkwd_read": 83.39, "random_read": 80.85, "stride_read": 85.52, "random_write": 100.0, "recored_rewrite": 100.0}, "Total_Scores": 100.0}, "Iozone-DirectIO": {"Point_Scores": {"read": 20.2, "fread": 82.87, "write": 28.23, "fwrite": 100.0, "reread": 20.22, "freread": 80.0, "rewrite": 29.36, "frewrite": 100.0, "bkwd_read": 14.68, "random_read": 16.65, "stride_read": 13.96, "random_write": 18.97, "recored_rewrite": 4.68}, "Total_Scores": 30.06}}, "algorithm": {"unzip": {"Point_Scores": {"tar": 86.58}, "Total_Scores": 86.58}, "Total_Scores": 63.65, "digital sign": {"Point_Scores": {"dsa": 31.07, "rsa": 24.79, "ecdsa": 60.66}, "Total_Scores": 36.02}, "digital verify": {"Point_Scores": {"dsa": 27.45, "rsa": 26.25, "ecdsa": 35.15}, "Total_Scores": 29.37}, "hash algorithm": {"Point_Scores": {"md5": 76.35, "sha1": 100.0, "sha256": 100.0, "sha512": 65.17}, "Total_Scores": 100.0}, "symmetric cyphers": {"Point_Scores": {"rc4": 50.0, "des cbc": 100.0, "rc2 cbc": 100.0, "cast cbc": 100.0, "des ede3": 100.0, "idea cbc": 92.69, "seed cbc": 100.0, "aes-128 cbc": 100.0, "aes-128 ige": 100.0, "aes-192 cbc": 100.0, "aes-192 ige": 100.0, "aes-256 cbc": 100.0, "aes-256 ige": 100.0, "blowfish cbc": 98.65}, "Total_Scores": 100.0}}, "application": {"jdk": {"Point_Scores": {"scimark": 59.79}, "Total_Scores": 59.79}, "hadoop": {"Point_Scores": {"HadoopJoin": 55.56, "HadoopScan": 52.98, "HadoopSort": 62.92, "HadoopBayes": 59.52, "HadoopKmeans": 62.31, "HadoopPagerank": 48.28, "HadoopTerasort": 45.6, "HadoopWordcount": 59.55, "HadoopAggregation": 54.2, "HadoopDfsioe-read": 57.11, "HadoopDfsioe-Write": 11.05}, "Total_Scores": 48.46}, "compile": {"Point_Scores": {"kernel-dev_01": 93.28, "kernel-dev_02": 93.05, "kernel-dev_04": 92.22, "kernel-dev_08": 89.66, "kernel-dev_16": 87.39, "kernel-dev_32": 91.27, "kernel-dev_64": 99.09, "kernel-dev_72": 99.45}, "Total_Scores": 93.08}, "sysbench": {"Point_Scores": {"avg": 24.04, "max": 27.43, "min": 23.28, "percentile": 23.33}, "Total_Scores": 24.48}, "Total_Scores": 71.51, "nginx_64_core_wrps": {"Point_Scores": {"wrps": 71.11}, "Total_Scores": 87.09}, "nginx_32_core_cross_wrps": {"Point_Scores": {"wrps": 57.1}, "Total_Scores": 77.97}, "nginx_32_core_local_wrps": {"Point_Scores": {"wrps": 85.76}, "Total_Scores": 100.0}}, "cpu_sincore": {"sincore_int": {"Point_Scores": {"IDEA": 100.0, "dhry2": 53.73, "HUFFMAN": 75.43, "BITFIELD": 88.1, "coremark": 92.3, "ASSIGNMENT": 76.32, "STRING SORT": 41.34, "integer_add": 74.05, "integer_bit": 100.0, "integer_div": 100.0, "integer_mod": 100.0, "integer_mul": 0, "FP EMULATION": 71.52, "NUMERIC SORT": 97.59}, "Total_Scores": 100.0}, "Total_Scores": 88.61, "sincore_misc": {"Point_Scores": {"stress_ng": 65.74, "sysbench_prime": 100.0}, "Total_Scores": 100.0}, "sincore_float": {"Point_Scores": {"FOURIER": 80.73, "scimark": 78.99, "float_add": 90.74, "float_div": 100.0, "float_mul": 90.74, "NEURAL NET": 77.38, "linpack_sp": 88.72, "LU DECOMPOSITION": 79.74, "float_bogomflops": 77.97}, "Total_Scores": 85.16}, "openblas_value": {"Point_Scores": {"TEST_01_200x200": 100.0, "TEST_02_400x400": 94.42, "TEST_03_1000x1000": 94.23, "TEST_04_2000x2000": 89.83, "TEST_05_3000x3000": 89.59, "TEST_06_4000x4000": 90.02}, "Total_Scores": 97.08}, "sincore_double": {"Point_Scores": {"double_add": 90.74, "double_div": 92.74, "double_mul": 90.74, "linpack_dp": 78.86, "double_bogomflops": 55.45}, "Total_Scores": 80.23}, "sincore_unixbench": {"Point_Scores": {"ub_pipe_ctx": 100.0, "ub_Dhrystone": 55.12, "ub_Whetstone": 82.87, "ub_pipe_Throughput": 57.64, "ub_Execl_Throughput": 67.92, "ub_Process_Creation": 34.82, "ub_File_Cpy_256buf_500blk": 52.81, "ub_File_Cpy_1024buf_2000blk": 51.63, "ub_File_Cpy_4096buf_8000blk": 45.92, "ub_shell_script_1_concurrent": 41.7, "ub_shell_script_8_concurrent": 36.23}, "Total_Scores": 58.46}, "openblas_efficiency": {"Point_Scores": {"TEST_01_200x200": 100.0, "TEST_02_400x400": 94.05, "TEST_03_1000x1000": 94.32, "TEST_04_2000x2000": 89.89, "TEST_05_3000x3000": 88.89, "TEST_06_4000x4000": 90.0}, "Total_Scores": 97.5}}, "cpu_multicore": {"Total_Scores": 100.0, "multicore_misc": {"Point_Scores": {"stress_ng": 78.91, "sysbench_prime": 100.0}, "Total_Scores": 100.0}, "multicore_unixbench": {"Point_Scores": {"ub_pipe_ctx": 99.44, "ub_Dhrystone": 94.42, "ub_Whetstone": 100.0, "ub_pipe_Throughput": 100.0, "ub_Execl_Throughput": 33.36, "ub_Process_Creation": 26.97, "ub_File_Cpy_256buf_500blk": 17.07, "ub_File_Cpy_1024buf_2000blk": 23.14, "ub_File_Cpy_4096buf_8000blk": 29.21, "ub_shell_script_1_concurrent": 38.79, "ub_shell_script_8_concurrent": 39.4}, "Total_Scores": 50.43}, "openblas_value_10_cores": {"Point_Scores": {"TEST_01_200x200": 100.0, "TEST_02_400x400": 100.0, "TEST_03_1000x1000": 96.04, "TEST_04_2000x2000": 91.4, "TEST_05_3000x3000": 89.56, "TEST_06_4000x4000": 89.02}, "Total_Scores": 100.0}, "openblas_value_32_cores": {"Point_Scores": {"TEST_01_200x200": 100.0, "TEST_02_400x400": 100.0, "TEST_03_1000x1000": 100.0, "TEST_04_2000x2000": 100.0, "TEST_05_3000x3000": 100.0, "TEST_06_4000x4000": 100.0}, "Total_Scores": 100.0}, "openblas_value_64_cores": {"Point_Scores": {"TEST_01_200x200": 85.29, "TEST_02_400x400": 11.95, "TEST_03_1000x1000": 100.0, "TEST_04_2000x2000": 100.0, "TEST_05_3000x3000": 100.0, "TEST_06_4000x4000": 100.0}, "Total_Scores": 100.0}, "openblas_efficiency_10_cores": {"Point_Scores": {"TEST_01_200x200": 100.0, "TEST_02_400x400": 100.0, "TEST_03_1000x1000": 96.92, "TEST_04_2000x2000": 91.43, "TEST_05_3000x3000": 90.0, "TEST_06_4000x4000": 88.73}, "Total_Scores": 100.0}, "openblas_efficiency_32_cores": {"Point_Scores": {"TEST_01_200x200": 100.0, "TEST_02_400x400": 100.0, "TEST_03_1000x1000": 100.0, "TEST_04_2000x2000": 100.0, "TEST_05_3000x3000": 100.0, "TEST_06_4000x4000": 100.0}, "Total_Scores": 100.0}, "openblas_efficiency_64_cores": {"Point_Scores": {"TEST_01_200x200": 86.96, "TEST_02_400x400": 12.7, "TEST_03_1000x1000": 100.0, "TEST_04_2000x2000": 100.0, "TEST_05_3000x3000": 100.0, "TEST_06_4000x4000": 100.0}, "Total_Scores": 100.0}}}}	
+2	RH2288-E5-2650	{"CPU": "48", "Memory": "386459MB", "CPU_type": "Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz", "Hostname": "RH2288-E5-2650", "L2_cache": "256 kB", "L3_cache": "30720 kB", "L1d_cache": "32 kB", "L1i_cache": "32 kB", "Byte_order": "Little Endian", "OS_Version": "Linux 4.4.0-53-generic", "Machine_arch": "x86_64"}	{"Functional": {}, "Performance": {"memory": {"bandwidth": {"Point_Scores": {"cachebench_rmw": 78.21, "cachebench_read": 27.42, "cachebench_write": 86.09}, "Total_Scores": 59.2}, "local_speed": {"Point_Scores": {"TCP": 100.0, "Pipe": 74.39, "Bzero": 72.83, "AF_Unix": 100.0, "Mem_read": 100.0, "Mem_write": 69.96, "Bcopy(hand)": 85.98, "Bcopy(libc)": 100.0, "File_reread": 100.0, "Mmap_reread": 100.0, "Bcopy(libc_a)": 100.0, "Mem_RW_partial": 100.0, "Mmap_open2close": 100.0, "Mem_read_partial": 100.0, "Mem_write_partial": 100.0, "Reread_open2close": 84.07, "BCopy(hand_partial)": 100.0}, "Total_Scores": 100.0}, "Total_Scores": 97.84, "tiny_latency": {"Point_Scores": {"Hugepage_dual_random_read": 100.0, "Hugepage_single_random_read": 100.0, "No_Hugepage_dual_random_read": 100.0, "No_Hugepage_single_random_read": 100.0}, "Total_Scores": 100.0}, "tiny_bandwidth": {"Point_Scores": {"C_copy": 78.87, "C_fill": 72.91, "C_2-pass_copy": 100.0, "standard_memcpy": 100.0, "standard_memset": 63.21, "C_copy_backwards": 88.7, "C_copy_prefetched_32B": 69.4, "C_copy_prefetched_64B": 69.18, "C_2-pass_copy_prefetched_32B": 95.09, "C_2-pass_copy_prefetched_64B": 94.65}, "Total_Scores": 93.96}, "lb_bw_stream_v1": {"Point_Scores": {"add": 42.43, "copy": 34.83, "scale": 35.98, "triad": 47.39}, "Total_Scores": 39.85}, "lb_bw_stream_v2": {"Point_Scores": {"sum": 59.53, "copy": 33.29, "fill": 21.36, "daxpy": 71.16}, "Total_Scores": 42.69}, "lb_bw_cross_01_core": {"Point_Scores": {"copy": 100.0, "read": 58.57, "bcopy": 96.25, "bzero": 55.93, "fcopy": 100.0, "fread": 77.06, "write": 55.33, "fwrite": 82.62, "readwrite": 63.15}, "Total_Scores": 74.45}, "lb_bw_cross_04_core": {"Point_Scores": {"copy": 97.73, "read": 100.0, "bcopy": 97.46, "bzero": 81.75, "fcopy": 98.07, "fread": 100.0, "write": 92.8, "fwrite": 95.08, "readwrite": 91.41}, "Total_Scores": 95.34}, "lb_bw_cross_16_core": {"Point_Scores": {"copy": 76.7, "read": 100.0, "bcopy": 57.34, "bzero": 68.12, "fcopy": 75.8, "fread": 100.0, "write": 62.31, "fwrite": 58.88, "readwrite": 56.9}, "Total_Scores": 74.17}, "lb_bw_local_01_core": {"Point_Scores": {"copy": 100.0, "read": 79.28, "bcopy": 100.0, "bzero": 72.85, "fcopy": 94.12, "fread": 93.58, "write": 70.2, "fwrite": 76.48, "readwrite": 75.69}, "Total_Scores": 87.51}, "lb_bw_local_04_core": {"Point_Scores": {"copy": 100.0, "read": 100.0, "bcopy": 100.0, "bzero": 100.0, "fcopy": 100.0, "fread": 100.0, "write": 98.89, "fwrite": 98.25, "readwrite": 97.84}, "Total_Scores": 100.0}, "lb_bw_local_16_core": {"Point_Scores": {"copy": 100.0, "read": 100.0, "bcopy": 100.0, "bzero": 100.0, "fcopy": 100.0, "fread": 100.0, "write": 100.0, "fwrite": 51.81, "readwrite": 100.0}, "Total_Scores": 100.0}, "lb_bw_local_32_core": {"Point_Scores": {"copy": 100.0, "read": 100.0, "bcopy": 100.0, "bzero": 100.0, "fcopy": 100.0, "fread": 100.0, "write": 100.0, "fwrite": 67.93, "readwrite": 100.0}, "Total_Scores": 100.0}, "lb_bw_local_64_core": {"Point_Scores": {"copy": 77.53, "read": 100.0, "bcopy": 86.93, "bzero": 58.12, "fcopy": 55.3, "fread": 100.0, "write": 74.08, "fwrite": 31.15, "readwrite": 91.49}, "Total_Scores": 71.8}, "lb_lat_cross_01_core": {"Point_Scores": {"lb_lat_02_2KB": 95.51, "lb_lat_03_3KB": 95.51, "lb_lat_04_4KB": 95.51, "lb_lat_05_6KB": 95.51, "lb_lat_06_8KB": 95.51, "lb_lat_20_1MB": 74.23, "lb_lat_22_2MB": 100.0, "lb_lat_23_3MB": 100.0, "lb_lat_24_4MB": 100.0, "lb_lat_25_6MB": 100.0, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 95.51, "lb_lat_07_12KB": 95.51, "lb_lat_08_16KB": 95.51, "lb_lat_09_24KB": 95.51, "lb_lat_10_32KB": 95.9, "lb_lat_11_48KB": 55.1, "lb_lat_12_64KB": 100.0, "lb_lat_13_96KB": 100.0, "lb_lat_27_12MB": 100.0, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 70.15, "lb_lat_00_0.5KB": 95.51, "lb_lat_14_128KB": 100.0, "lb_lat_15_192KB": 97.39, "lb_lat_16_256KB": 68.7, "lb_lat_17_384KB": 68.7, "lb_lat_18_512KB": 63.48, "lb_lat_19_768KB": 62.61, "lb_lat_21_1.5MB": 100.0}, "Total_Scores": 100.0}, "lb_lat_cross_04_core": {"Point_Scores": {"lb_lat_02_2KB": 95.51, "lb_lat_03_3KB": 95.51, "lb_lat_04_4KB": 95.51, "lb_lat_05_6KB": 95.51, "lb_lat_06_8KB": 95.51, "lb_lat_20_1MB": 100.0, "lb_lat_22_2MB": 100.0, "lb_lat_23_3MB": 100.0, "lb_lat_24_4MB": 100.0, "lb_lat_25_6MB": 100.0, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 95.51, "lb_lat_07_12KB": 95.51, "lb_lat_08_16KB": 95.51, "lb_lat_09_24KB": 95.51, "lb_lat_10_32KB": 95.9, "lb_lat_11_48KB": 55.1, "lb_lat_12_64KB": 100.0, "lb_lat_13_96KB": 100.0, "lb_lat_27_12MB": 100.0, "lb_lat_28_16MB": 38.57, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 95.51, "lb_lat_14_128KB": 100.0, "lb_lat_15_192KB": 100.0, "lb_lat_16_256KB": 100.0, "lb_lat_17_384KB": 100.0, "lb_lat_18_512KB": 100.0, "lb_lat_19_768KB": 100.0, "lb_lat_21_1.5MB": 100.0}, "Total_Scores": 99.11}, "lb_lat_cross_16_core": {"Point_Scores": {"lb_lat_02_2KB": 95.51, "lb_lat_03_3KB": 95.51, "lb_lat_04_4KB": 95.51, "lb_lat_05_6KB": 95.51, "lb_lat_06_8KB": 95.51, "lb_lat_20_1MB": 100.0, "lb_lat_22_2MB": 100.0, "lb_lat_23_3MB": 100.0, "lb_lat_24_4MB": 100.0, "lb_lat_25_6MB": 100.0, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 95.51, "lb_lat_07_12KB": 95.51, "lb_lat_08_16KB": 95.51, "lb_lat_09_24KB": 95.51, "lb_lat_10_32KB": 95.9, "lb_lat_11_48KB": 55.1, "lb_lat_12_64KB": 100.0, "lb_lat_13_96KB": 100.0, "lb_lat_27_12MB": 100.0, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 95.51, "lb_lat_14_128KB": 100.0, "lb_lat_15_192KB": 85.61, "lb_lat_16_256KB": 100.0, "lb_lat_17_384KB": 100.0, "lb_lat_18_512KB": 100.0, "lb_lat_19_768KB": 100.0, "lb_lat_21_1.5MB": 100.0}, "Total_Scores": 100.0}, "lb_lat_local_01_core": {"Point_Scores": {"lb_lat_02_2KB": 95.51, "lb_lat_03_3KB": 95.51, "lb_lat_04_4KB": 95.51, "lb_lat_05_6KB": 95.51, "lb_lat_06_8KB": 95.51, "lb_lat_20_1MB": 75.79, "lb_lat_22_2MB": 100.0, "lb_lat_23_3MB": 100.0, "lb_lat_24_4MB": 100.0, "lb_lat_25_6MB": 100.0, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 95.51, "lb_lat_07_12KB": 95.51, "lb_lat_08_16KB": 95.51, "lb_lat_09_24KB": 95.51, "lb_lat_10_32KB": 95.9, "lb_lat_11_48KB": 55.1, "lb_lat_12_64KB": 100.0, "lb_lat_13_96KB": 100.0, "lb_lat_27_12MB": 100.0, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 80.6, "lb_lat_00_0.5KB": 95.51, "lb_lat_14_128KB": 80.3, "lb_lat_15_192KB": 96.52, "lb_lat_16_256KB": 82.61, "lb_lat_17_384KB": 66.09, "lb_lat_18_512KB": 62.61, "lb_lat_19_768KB": 63.16, "lb_lat_21_1.5MB": 100.0}, "Total_Scores": 100.0}, "lb_lat_local_04_core": {"Point_Scores": {"lb_lat_02_2KB": 95.51, "lb_lat_03_3KB": 95.51, "lb_lat_04_4KB": 95.51, "lb_lat_05_6KB": 95.51, "lb_lat_06_8KB": 95.51, "lb_lat_20_1MB": 100.0, "lb_lat_22_2MB": 100.0, "lb_lat_23_3MB": 100.0, "lb_lat_24_4MB": 100.0, "lb_lat_25_6MB": 98.57, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 95.51, "lb_lat_07_12KB": 95.51, "lb_lat_08_16KB": 95.51, "lb_lat_09_24KB": 95.51, "lb_lat_10_32KB": 95.9, "lb_lat_11_48KB": 55.1, "lb_lat_12_64KB": 100.0, "lb_lat_13_96KB": 100.0, "lb_lat_27_12MB": 100.0, "lb_lat_28_16MB": 52.31, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 95.51, "lb_lat_14_128KB": 100.0, "lb_lat_15_192KB": 100.0, "lb_lat_16_256KB": 100.0, "lb_lat_17_384KB": 100.0, "lb_lat_18_512KB": 100.0, "lb_lat_19_768KB": 100.0, "lb_lat_21_1.5MB": 100.0}, "Total_Scores": 100.0}, "lb_lat_local_16_core": {"Point_Scores": {"lb_lat_02_2KB": 95.51, "lb_lat_03_3KB": 95.51, "lb_lat_04_4KB": 95.51, "lb_lat_05_6KB": 95.51, "lb_lat_06_8KB": 95.51, "lb_lat_20_1MB": 100.0, "lb_lat_22_2MB": 100.0, "lb_lat_23_3MB": 100.0, "lb_lat_24_4MB": 100.0, "lb_lat_25_6MB": 100.0, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 95.51, "lb_lat_07_12KB": 95.51, "lb_lat_08_16KB": 95.51, "lb_lat_09_24KB": 95.51, "lb_lat_10_32KB": 95.9, "lb_lat_11_48KB": 55.1, "lb_lat_12_64KB": 100.0, "lb_lat_13_96KB": 100.0, "lb_lat_27_12MB": 100.0, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 95.51, "lb_lat_14_128KB": 100.0, "lb_lat_15_192KB": 100.0, "lb_lat_16_256KB": 100.0, "lb_lat_17_384KB": 100.0, "lb_lat_18_512KB": 100.0, "lb_lat_19_768KB": 100.0, "lb_lat_21_1.5MB": 100.0}, "Total_Scores": 100.0}, "lb_lat_local_32_core": {"Point_Scores": {"lb_lat_02_2KB": 95.51, "lb_lat_03_3KB": 95.51, "lb_lat_04_4KB": 95.51, "lb_lat_05_6KB": 95.51, "lb_lat_06_8KB": 95.51, "lb_lat_20_1MB": 100.0, "lb_lat_22_2MB": 100.0, "lb_lat_23_3MB": 100.0, "lb_lat_24_4MB": 100.0, "lb_lat_25_6MB": 100.0, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 95.51, "lb_lat_07_12KB": 95.51, "lb_lat_08_16KB": 95.51, "lb_lat_09_24KB": 95.51, "lb_lat_10_32KB": 95.9, "lb_lat_11_48KB": 55.1, "lb_lat_12_64KB": 100.0, "lb_lat_13_96KB": 100.0, "lb_lat_27_12MB": 100.0, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 95.51, "lb_lat_14_128KB": 100.0, "lb_lat_15_192KB": 100.0, "lb_lat_16_256KB": 98.0, "lb_lat_17_384KB": 100.0, "lb_lat_18_512KB": 100.0, "lb_lat_19_768KB": 100.0, "lb_lat_21_1.5MB": 100.0}, "Total_Scores": 100.0}}, "latency": {"ctx": {"Point_Scores": {"02p/0K_ctxsw": 95.24, "02p/16K_ctxsw": 84.83, "02p/64K_ctxsw": 80.47, "08p/16K_ctxsw": 99.43, "08p/64K_ctxsw": 98.31, "16p/16K_ctxsw": 95.29, "16p/64K_ctxsw": 100.0}, "Total_Scores": 94.57}, "file/vm": {"Point_Scores": {"Mmap(KB)": 96.8, "Prot_fault": 60.64, "100fd_select": 100.0, "0k_file_create": 100.0, "0k_file_delete": 100.0, "10k_file_create": 100.0, "10k_file_delete": 100.0}, "Total_Scores": 100.0}, "process": {"Point_Scores": {"stat": 100.0, "null_IO": 100.0, "sh_proc": 100.0, "sig_hndl": 100.0, "sig_inst": 100.0, "slct_TCP": 100.0, "exec_proc": 100.0, "fork_proc": 92.86, "null_call": 100.0, "open_close": 100.0}, "Total_Scores": 100.0}, "Total_Scores": 100.0}, "network": {"bandwidth": {"Point_Scores": {"TCP_RR": 100.0, "UDP_RR": 100.0, "TCP_CRR": 100.0, "TCP_s01_RX": 90.44, "TCP_s01_TX": 98.9, "TCP_s03_RX": 82.9, "TCP_s03_TX": 94.44, "TCP_s04_RX": 86.01, "TCP_s04_TX": 85.84, "TCP_s05_RX": 86.06, "TCP_s05_TX": 84.14, "TCP_s10_RX": 88.95, "TCP_s10_TX": 75.49, "TCP_stream": 98.29, "UDP_s01_RX": 98.73, "UDP_s01_TX": 100.0, "UDP_s03_RX": 100.0, "UDP_s03_TX": 100.0, "UDP_s05_RX": 100.0, "UDP_s05_TX": 100.0, "UDP_s10_RX": 98.93, "UDP_s10_TX": 100.0, "TCP_stream_r": 98.4, "TCP_bw_000001B": 100.0, "TCP_bw_000002B": 100.0, "TCP_bw_000004B": 100.0, "TCP_bw_000008B": 100.0, "TCP_bw_000016B": 100.0, "TCP_bw_000032B": 100.0, "TCP_bw_000064B": 100.0, "TCP_bw_000128B": 100.0, "TCP_bw_000256B": 100.0, "TCP_bw_000512B": 90.84, "TCP_bw_001000B": 70.0, "TCP_bw_002000B": 74.3, "TCP_bw_004000B": 72.98, "TCP_bw_008000B": 78.93, "TCP_bw_016000B": 62.43, "TCP_bw_032000B": 83.16, "TCP_bw_064000B": 96.93}, "Total_Scores": 100.0}, "local_lat": {"Point_Scores": {"TCP": 100.0, "UDP": 100.0, "Pipe": 99.14, "AF_Unix": 98.29, "TCP_con": 100.0, "TCP_lat_000001B": 100.0, "TCP_lat_000002B": 100.0, "TCP_lat_000004B": 100.0, "TCP_lat_000008B": 100.0, "TCP_lat_000016B": 100.0, "TCP_lat_000032B": 100.0, "TCP_lat_000064B": 100.0, "TCP_lat_000128B": 100.0, "TCP_lat_000256B": 89.39, "TCP_lat_000512B": 100.0, "TCP_lat_001000B": 100.0, "TCP_lat_002000B": 100.0, "TCP_lat_004000B": 100.0, "TCP_lat_008000B": 100.0, "TCP_lat_016000B": 89.74, "TCP_lat_032000B": 100.0, "TCP_lat_064000B": 100.0}, "Total_Scores": 100.0}, "Total_Scores": 100.0}, "storage": {"iops": {"Point_Scores": {"fio_read": 100.0, "fio_write": 100.0, "fio_randread": 100.0, "fio_randwrite": 100.0}, "Total_Scores": 100.0}, "bandwidth": {"Point_Scores": {"fio_read": 100.0, "fio_write": 100.0, "fio_randread": 100.0, "fio_randwrite": 100.0}, "Total_Scores": 100.0}, "Total_Scores": 100.0, "Iozone-Cached": {"Point_Scores": {"read": 100.0, "fread": 100.0, "write": 54.67, "fwrite": 86.42, "reread": 100.0, "freread": 100.0, "rewrite": 58.95, "frewrite": 76.98, "bkwd_read": 100.0, "random_read": 100.0, "stride_read": 100.0, "random_write": 64.08, "recored_rewrite": 75.97}, "Total_Scores": 92.73}, "Iozone-DirectIO": {"Point_Scores": {"read": 100.0, "fread": 100.0, "write": 100.0, "fwrite": 60.21, "reread": 100.0, "freread": 100.0, "rewrite": 100.0, "frewrite": 68.35, "bkwd_read": 100.0, "random_read": 100.0, "stride_read": 100.0, "random_write": 100.0, "recored_rewrite": 100.0}, "Total_Scores": 100.0}}, "algorithm": {"unzip": {"Point_Scores": {"tar": 100.0}, "Total_Scores": 100.0}, "Total_Scores": 100.0, "digital sign": {"Point_Scores": {"dsa": 100.0, "rsa": 100.0, "ecdsa": 100.0}, "Total_Scores": 100.0}, "digital verify": {"Point_Scores": {"dsa": 100.0, "rsa": 100.0, "ecdsa": 100.0}, "Total_Scores": 100.0}, "hash algorithm": {"Point_Scores": {"md5": 97.3, "sha1": 91.3, "sha256": 46.13, "sha512": 100.0}, "Total_Scores": 95.22}, "symmetric cyphers": {"Point_Scores": {"rc4": 100.0, "des cbc": 94.92, "rc2 cbc": 94.65, "cast cbc": 95.13, "des ede3": 95.48, "idea cbc": 100.0, "seed cbc": 93.86, "aes-128 cbc": 77.21, "aes-128 ige": 78.14, "aes-192 cbc": 75.58, "aes-192 ige": 75.78, "aes-256 cbc": 73.34, "aes-256 ige": 73.39, "blowfish cbc": 100.0}, "Total_Scores": 92.06}}, "application": {"jdk": {"Point_Scores": {"scimark": 100.0}, "Total_Scores": 100.0}, "hadoop": {"Point_Scores": {"HadoopJoin": 100.0, "HadoopScan": 100.0, "HadoopSort": 100.0, "HadoopBayes": 88.1, "HadoopKmeans": 100.0, "HadoopPagerank": 100.0, "HadoopTerasort": 100.0, "HadoopWordcount": 100.0, "HadoopAggregation": 100.0, "HadoopDfsioe-read": 100.0, "HadoopDfsioe-Write": 100.0}, "Total_Scores": 100.0}, "compile": {"Point_Scores": {"kernel-dev_01": 100.0, "kernel-dev_02": 100.0, "kernel-dev_04": 100.0, "kernel-dev_08": 100.0, "kernel-dev_16": 100.0, "kernel-dev_32": 100.0, "kernel-dev_64": 100.0, "kernel-dev_72": 100.0}, "Total_Scores": 100.0}, "sysbench": {"Point_Scores": {"avg": 100.0, "max": 100.0, "min": 100.0, "percentile": 100.0}, "Total_Scores": 100.0}, "Total_Scores": 100.0, "nginx_64_core_wrps": {"Point_Scores": {"wrps": 70.0}, "Total_Scores": 71.6}, "nginx_32_core_cross_wrps": {"Point_Scores": {"wrps": 57.24}, "Total_Scores": 66.95}, "nginx_32_core_local_wrps": {"Point_Scores": {"wrps": 100.0}, "Total_Scores": 97.78}}, "cpu_sincore": {"sincore_int": {"Point_Scores": {"IDEA": 91.76, "dhry2": 100.0, "HUFFMAN": 100.0, "BITFIELD": 100.0, "coremark": 100.0, "ASSIGNMENT": 100.0, "STRING SORT": 100.0, "integer_add": 100.0, "integer_bit": 95.49, "integer_div": 55.49, "integer_mod": 57.06, "integer_mul": 100.0, "FP EMULATION": 100.0, "NUMERIC SORT": 100.0}, "Total_Scores": 96.9}, "Total_Scores": 100.0, "sincore_misc": {"Point_Scores": {"stress_ng": 100.0, "sysbench_prime": 54.37}, "Total_Scores": 90.91}, "sincore_float": {"Point_Scores": {"FOURIER": 100.0, "scimark": 100.0, "float_add": 100.0, "float_div": 95.24, "float_mul": 100.0, "NEURAL NET": 100.0, "linpack_sp": 100.0, "LU DECOMPOSITION": 100.0, "float_bogomflops": 100.0}, "Total_Scores": 100.0}, "openblas_value": {"Point_Scores": {"TEST_01_200x200": 76.98, "TEST_02_400x400": 100.0, "TEST_03_1000x1000": 100.0, "TEST_04_2000x2000": 100.0, "TEST_05_3000x3000": 100.0, "TEST_06_4000x4000": 100.0}, "Total_Scores": 100.0}, "sincore_double": {"Point_Scores": {"double_add": 100.0, "double_div": 100.0, "double_mul": 100.0, "linpack_dp": 100.0, "double_bogomflops": 100.0}, "Total_Scores": 100.0}, "sincore_unixbench": {"Point_Scores": {"ub_pipe_ctx": 86.12, "ub_Dhrystone": 100.0, "ub_Whetstone": 53.21, "ub_pipe_Throughput": 100.0, "ub_Execl_Throughput": 100.0, "ub_Process_Creation": 94.93, "ub_File_Cpy_256buf_500blk": 99.3, "ub_File_Cpy_1024buf_2000blk": 100.0, "ub_File_Cpy_4096buf_8000blk": 100.0, "ub_shell_script_1_concurrent": 100.0, "ub_shell_script_8_concurrent": 100.0}, "Total_Scores": 100.0}, "openblas_efficiency": {"Point_Scores": {"TEST_01_200x200": 76.12, "TEST_02_400x400": 100.0, "TEST_03_1000x1000": 100.0, "TEST_04_2000x2000": 100.0, "TEST_05_3000x3000": 100.0, "TEST_06_4000x4000": 100.0}, "Total_Scores": 100.0}}, "cpu_multicore": {"Total_Scores": 68.64, "multicore_misc": {"Point_Scores": {"stress_ng": 89.45, "sysbench_prime": 41.98}, "Total_Scores": 69.0}, "multicore_unixbench": {"Point_Scores": {"ub_pipe_ctx": 80.76, "ub_Dhrystone": 77.83, "ub_Whetstone": 41.7, "ub_pipe_Throughput": 76.11, "ub_Execl_Throughput": 100.0, "ub_Process_Creation": 100.0, "ub_File_Cpy_256buf_500blk": 55.75, "ub_File_Cpy_1024buf_2000blk": 59.66, "ub_File_Cpy_4096buf_8000blk": 59.65, "ub_shell_script_1_concurrent": 100.0, "ub_shell_script_8_concurrent": 100.0}, "Total_Scores": 83.77}, "openblas_value_10_cores": {"Point_Scores": {"TEST_01_200x200": 23.78, "TEST_02_400x400": 82.96, "TEST_03_1000x1000": 100.0, "TEST_04_2000x2000": 100.0, "TEST_05_3000x3000": 100.0, "TEST_06_4000x4000": 100.0}, "Total_Scores": 80.98}, "openblas_value_32_cores": {"Point_Scores": {"TEST_01_200x200": 36.62, "TEST_02_400x400": 25.19, "TEST_03_1000x1000": 33.31, "TEST_04_2000x2000": 37.66, "TEST_05_3000x3000": 37.64, "TEST_06_4000x4000": 36.48}, "Total_Scores": 34.16}, "openblas_value_64_cores": {"Point_Scores": {"TEST_01_200x200": 100.0, "TEST_02_400x400": 55.67, "TEST_03_1000x1000": 44.67, "TEST_04_2000x2000": 42.01, "TEST_05_3000x3000": 39.32, "TEST_06_4000x4000": 42.74}, "Total_Scores": 74.59}, "openblas_efficiency_10_cores": {"Point_Scores": {"TEST_01_200x200": 24.14, "TEST_02_400x400": 83.08, "TEST_03_1000x1000": 100.0, "TEST_04_2000x2000": 100.0, "TEST_05_3000x3000": 100.0, "TEST_06_4000x4000": 100.0}, "Total_Scores": 80.36}, "openblas_efficiency_32_cores": {"Point_Scores": {"TEST_01_200x200": 36.51, "TEST_02_400x400": 25.52, "TEST_03_1000x1000": 33.9, "TEST_04_2000x2000": 38.6, "TEST_05_3000x3000": 37.93, "TEST_06_4000x4000": 36.67}, "Total_Scores": 33.33}, "openblas_efficiency_64_cores": {"Point_Scores": {"TEST_01_200x200": 100.0, "TEST_02_400x400": 55.56, "TEST_03_1000x1000": 44.55, "TEST_04_2000x2000": 44.0, "TEST_05_3000x3000": 39.29, "TEST_06_4000x4000": 42.31}, "Total_Scores": 77.78}}}}	
+3	RH2288-E5-2683	{"CPU": "64", "Memory": "386404MB", "CPU_type": "Intel(R) Xeon(R) CPU E5-2683 v4 @ 2.10GHz", "Hostname": "RH2288-E5-2683", "L2_cache": "256 kB", "L3_cache": "40960 kB", "L1d_cache": "32 kB", "L1i_cache": "32 kB", "Byte_order": "Little Endian", "OS_Version": "Linux 3.10.0-123.el7.x86_64", "Machine_arch": "x86_64"}	{"Functional": {}, "Performance": {"memory": {"bandwidth": {"Point_Scores": {"cachebench_rmw": 74.36, "cachebench_read": 26.27, "cachebench_write": 100.0}, "Total_Scores": 60.25}, "local_speed": {"Point_Scores": {"TCP": 89.91, "Pipe": 75.2, "Bzero": 89.83, "AF_Unix": 78.26, "Mem_read": 95.63, "Mem_write": 68.72, "Bcopy(hand)": 81.87, "Bcopy(libc)": 91.19, "File_reread": 79.84, "Mmap_reread": 96.4, "Bcopy(libc_a)": 89.61, "Mem_RW_partial": 98.53, "Mmap_open2close": 64.9, "Mem_read_partial": 98.53, "Mem_write_partial": 97.18, "Reread_open2close": 100.0, "BCopy(hand_partial)": 95.78}, "Total_Scores": 93.91}, "Total_Scores": 100.0, "tiny_latency": {"Point_Scores": {"Hugepage_dual_random_read": 88.43, "Hugepage_single_random_read": 90.45, "No_Hugepage_dual_random_read": 88.43, "No_Hugepage_single_random_read": 90.45}, "Total_Scores": 89.44}, "tiny_bandwidth": {"Point_Scores": {"C_copy": 78.35, "C_fill": 100.0, "C_2-pass_copy": 98.81, "standard_memcpy": 97.56, "standard_memset": 100.0, "C_copy_backwards": 87.16, "C_copy_prefetched_32B": 67.79, "C_copy_prefetched_64B": 67.58, "C_2-pass_copy_prefetched_32B": 92.86, "C_2-pass_copy_prefetched_64B": 92.65}, "Total_Scores": 100.0}, "lb_bw_stream_v1": {"Point_Scores": {"add": 67.85, "copy": 55.66, "scale": 56.2, "triad": 68.41}, "Total_Scores": 61.73}, "lb_bw_stream_v2": {"Point_Scores": {"sum": 100.0, "copy": 57.83, "fill": 34.8, "daxpy": 92.2}, "Total_Scores": 67.25}, "lb_bw_cross_01_core": {"Point_Scores": {"copy": 100.0, "read": 100.0, "bcopy": 100.0, "bzero": 100.0, "fcopy": 100.0, "fread": 100.0, "write": 100.0, "fwrite": 100.0, "readwrite": 100.0}, "Total_Scores": 100.0}, "lb_bw_cross_04_core": {"Point_Scores": {"copy": 100.0, "read": 98.07, "bcopy": 100.0, "bzero": 100.0, "fcopy": 100.0, "fread": 96.62, "write": 100.0, "fwrite": 100.0, "readwrite": 100.0}, "Total_Scores": 100.0}, "lb_bw_cross_16_core": {"Point_Scores": {"copy": 100.0, "read": 82.83, "bcopy": 100.0, "bzero": 100.0, "fcopy": 100.0, "fread": 83.98, "write": 100.0, "fwrite": 100.0, "readwrite": 100.0}, "Total_Scores": 100.0}, "lb_bw_local_01_core": {"Point_Scores": {"copy": 99.35, "read": 100.0, "bcopy": 93.78, "bzero": 100.0, "fcopy": 91.28, "fread": 100.0, "write": 100.0, "fwrite": 80.96, "readwrite": 100.0}, "Total_Scores": 100.0}, "lb_bw_local_04_core": {"Point_Scores": {"copy": 98.26, "read": 96.97, "bcopy": 96.28, "bzero": 80.8, "fcopy": 97.39, "fread": 96.82, "write": 100.0, "fwrite": 100.0, "readwrite": 100.0}, "Total_Scores": 96.65}, "lb_bw_local_16_core": {"Point_Scores": {"copy": 65.32, "read": 61.81, "bcopy": 74.6, "bzero": 32.2, "fcopy": 65.9, "fread": 74.03, "write": 52.78, "fwrite": 33.52, "readwrite": 58.7}, "Total_Scores": 59.59}, "lb_bw_local_32_core": {"Point_Scores": {"copy": 89.81, "read": 94.28, "bcopy": 95.65, "bzero": 50.94, "fcopy": 83.8, "fread": 95.39, "write": 96.45, "fwrite": 63.78, "readwrite": 94.39}, "Total_Scores": 86.89}, "lb_bw_local_64_core": {"Point_Scores": {"copy": 71.52, "read": 95.11, "bcopy": 85.6, "bzero": 30.63, "fcopy": 51.92, "fread": 93.33, "write": 71.71, "fwrite": 30.33, "readwrite": 88.56}, "Total_Scores": 64.17}, "lb_lat_cross_01_core": {"Point_Scores": {"lb_lat_02_2KB": 93.47, "lb_lat_03_3KB": 93.47, "lb_lat_04_4KB": 93.47, "lb_lat_05_6KB": 93.47, "lb_lat_06_8KB": 93.47, "lb_lat_20_1MB": 70.1, "lb_lat_22_2MB": 94.44, "lb_lat_23_3MB": 93.06, "lb_lat_24_4MB": 93.06, "lb_lat_25_6MB": 93.06, "lb_lat_26_8MB": 94.37, "lb_lat_01_01KB": 93.47, "lb_lat_07_12KB": 93.47, "lb_lat_08_16KB": 93.47, "lb_lat_09_24KB": 93.47, "lb_lat_10_32KB": 93.85, "lb_lat_11_48KB": 53.88, "lb_lat_12_64KB": 97.78, "lb_lat_13_96KB": 80.0, "lb_lat_27_12MB": 94.37, "lb_lat_28_16MB": 94.37, "lb_lat_29_24MB": 95.71, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 93.47, "lb_lat_14_128KB": 97.78, "lb_lat_15_192KB": 74.78, "lb_lat_16_256KB": 77.39, "lb_lat_17_384KB": 60.87, "lb_lat_18_512KB": 59.13, "lb_lat_19_768KB": 59.13, "lb_lat_21_1.5MB": 93.06}, "Total_Scores": 96.64}, "lb_lat_cross_04_core": {"Point_Scores": {"lb_lat_02_2KB": 93.47, "lb_lat_03_3KB": 93.47, "lb_lat_04_4KB": 93.47, "lb_lat_05_6KB": 93.47, "lb_lat_06_8KB": 93.47, "lb_lat_20_1MB": 97.22, "lb_lat_22_2MB": 97.22, "lb_lat_23_3MB": 97.22, "lb_lat_24_4MB": 98.59, "lb_lat_25_6MB": 98.59, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 93.47, "lb_lat_07_12KB": 93.47, "lb_lat_08_16KB": 93.47, "lb_lat_09_24KB": 93.47, "lb_lat_10_32KB": 93.85, "lb_lat_11_48KB": 53.88, "lb_lat_12_64KB": 97.78, "lb_lat_13_96KB": 97.78, "lb_lat_27_12MB": 97.18, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 96.3, "lb_lat_30_32MB": 96.3, "lb_lat_00_0.5KB": 93.47, "lb_lat_14_128KB": 97.78, "lb_lat_15_192KB": 97.78, "lb_lat_16_256KB": 100.0, "lb_lat_17_384KB": 96.0, "lb_lat_18_512KB": 95.89, "lb_lat_19_768KB": 97.22, "lb_lat_21_1.5MB": 97.22}, "Total_Scores": 100.0}, "lb_lat_cross_16_core": {"Point_Scores": {"lb_lat_02_2KB": 93.47, "lb_lat_03_3KB": 93.47, "lb_lat_04_4KB": 93.47, "lb_lat_05_6KB": 93.47, "lb_lat_06_8KB": 93.47, "lb_lat_20_1MB": 95.89, "lb_lat_22_2MB": 95.83, "lb_lat_23_3MB": 94.52, "lb_lat_24_4MB": 94.52, "lb_lat_25_6MB": 37.68, "lb_lat_26_8MB": 37.68, "lb_lat_01_01KB": 93.47, "lb_lat_07_12KB": 93.47, "lb_lat_08_16KB": 93.47, "lb_lat_09_24KB": 93.47, "lb_lat_10_32KB": 93.85, "lb_lat_11_48KB": 53.88, "lb_lat_12_64KB": 97.78, "lb_lat_13_96KB": 97.78, "lb_lat_27_12MB": 37.14, "lb_lat_28_16MB": 78.79, "lb_lat_29_24MB": 78.79, "lb_lat_30_32MB": 78.79, "lb_lat_00_0.5KB": 93.47, "lb_lat_14_128KB": 97.78, "lb_lat_15_192KB": 100.0, "lb_lat_16_256KB": 95.5, "lb_lat_17_384KB": 93.67, "lb_lat_18_512KB": 96.0, "lb_lat_19_768KB": 95.89, "lb_lat_21_1.5MB": 95.89}, "Total_Scores": 86.84}, "lb_lat_local_01_core": {"Point_Scores": {"lb_lat_02_2KB": 93.47, "lb_lat_03_3KB": 93.47, "lb_lat_04_4KB": 93.47, "lb_lat_05_6KB": 93.47, "lb_lat_06_8KB": 93.47, "lb_lat_20_1MB": 71.58, "lb_lat_22_2MB": 94.44, "lb_lat_23_3MB": 93.06, "lb_lat_24_4MB": 93.06, "lb_lat_25_6MB": 93.06, "lb_lat_26_8MB": 93.06, "lb_lat_01_01KB": 93.47, "lb_lat_07_12KB": 93.47, "lb_lat_08_16KB": 93.47, "lb_lat_09_24KB": 93.47, "lb_lat_10_32KB": 93.85, "lb_lat_11_48KB": 53.88, "lb_lat_12_64KB": 97.78, "lb_lat_13_96KB": 97.78, "lb_lat_27_12MB": 94.37, "lb_lat_28_16MB": 94.37, "lb_lat_29_24MB": 97.1, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 93.47, "lb_lat_14_128KB": 100.0, "lb_lat_15_192KB": 93.91, "lb_lat_16_256KB": 77.39, "lb_lat_17_384KB": 59.13, "lb_lat_18_512KB": 59.13, "lb_lat_19_768KB": 59.65, "lb_lat_21_1.5MB": 94.44}, "Total_Scores": 97.48}, "lb_lat_local_04_core": {"Point_Scores": {"lb_lat_02_2KB": 93.47, "lb_lat_03_3KB": 93.47, "lb_lat_04_4KB": 93.47, "lb_lat_05_6KB": 93.47, "lb_lat_06_8KB": 93.47, "lb_lat_20_1MB": 97.22, "lb_lat_22_2MB": 97.22, "lb_lat_23_3MB": 97.22, "lb_lat_24_4MB": 100.0, "lb_lat_25_6MB": 100.0, "lb_lat_26_8MB": 98.57, "lb_lat_01_01KB": 93.47, "lb_lat_07_12KB": 93.47, "lb_lat_08_16KB": 93.47, "lb_lat_09_24KB": 93.47, "lb_lat_10_32KB": 93.85, "lb_lat_11_48KB": 53.88, "lb_lat_12_64KB": 97.78, "lb_lat_13_96KB": 97.78, "lb_lat_27_12MB": 95.71, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 97.06, "lb_lat_30_32MB": 97.06, "lb_lat_00_0.5KB": 93.47, "lb_lat_14_128KB": 97.78, "lb_lat_15_192KB": 97.78, "lb_lat_16_256KB": 97.96, "lb_lat_17_384KB": 97.3, "lb_lat_18_512KB": 97.22, "lb_lat_19_768KB": 97.22, "lb_lat_21_1.5MB": 97.22}, "Total_Scores": 100.0}, "lb_lat_local_16_core": {"Point_Scores": {"lb_lat_02_2KB": 93.47, "lb_lat_03_3KB": 93.47, "lb_lat_04_4KB": 93.47, "lb_lat_05_6KB": 93.47, "lb_lat_06_8KB": 93.47, "lb_lat_20_1MB": 95.89, "lb_lat_22_2MB": 95.89, "lb_lat_23_3MB": 94.52, "lb_lat_24_4MB": 98.59, "lb_lat_25_6MB": 47.83, "lb_lat_26_8MB": 49.25, "lb_lat_01_01KB": 93.47, "lb_lat_07_12KB": 93.47, "lb_lat_08_16KB": 93.47, "lb_lat_09_24KB": 93.47, "lb_lat_10_32KB": 93.85, "lb_lat_11_48KB": 53.88, "lb_lat_12_64KB": 97.78, "lb_lat_13_96KB": 97.78, "lb_lat_27_12MB": 47.14, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 93.47, "lb_lat_14_128KB": 97.78, "lb_lat_15_192KB": 97.78, "lb_lat_16_256KB": 86.73, "lb_lat_17_384KB": 94.87, "lb_lat_18_512KB": 97.26, "lb_lat_19_768KB": 95.89, "lb_lat_21_1.5MB": 95.89}, "Total_Scores": 90.35}, "lb_lat_local_32_core": {"Point_Scores": {"lb_lat_02_2KB": 93.06, "lb_lat_03_3KB": 93.06, "lb_lat_04_4KB": 93.06, "lb_lat_05_6KB": 93.06, "lb_lat_06_8KB": 93.06, "lb_lat_20_1MB": 97.22, "lb_lat_22_2MB": 98.59, "lb_lat_23_3MB": 95.83, "lb_lat_24_4MB": 97.18, "lb_lat_25_6MB": 45.07, "lb_lat_26_8MB": 100.0, "lb_lat_01_01KB": 93.06, "lb_lat_07_12KB": 93.06, "lb_lat_08_16KB": 93.06, "lb_lat_09_24KB": 93.06, "lb_lat_10_32KB": 93.44, "lb_lat_11_48KB": 53.88, "lb_lat_12_64KB": 97.78, "lb_lat_13_96KB": 97.78, "lb_lat_27_12MB": 100.0, "lb_lat_28_16MB": 100.0, "lb_lat_29_24MB": 100.0, "lb_lat_30_32MB": 100.0, "lb_lat_00_0.5KB": 93.06, "lb_lat_14_128KB": 97.78, "lb_lat_15_192KB": 97.78, "lb_lat_16_256KB": 100.0, "lb_lat_17_384KB": 98.72, "lb_lat_18_512KB": 95.95, "lb_lat_19_768KB": 97.22, "lb_lat_21_1.5MB": 98.59}, "Total_Scores": 96.26}}, "latency": {"ctx": {"Point_Scores": {"02p/0K_ctxsw": 96.83, "02p/16K_ctxsw": 88.63, "02p/64K_ctxsw": 89.77, "08p/16K_ctxsw": 100.0, "08p/64K_ctxsw": 100.0, "16p/16K_ctxsw": 99.41, "16p/64K_ctxsw": 89.08}, "Total_Scores": 96.2}, "file/vm": {"Point_Scores": {"Mmap(KB)": 91.2, "Prot_fault": 70.03, "100fd_select": 98.57, "0k_file_create": 46.83, "0k_file_delete": 66.01, "10k_file_create": 59.3, "10k_file_delete": 70.59}, "Total_Scores": 75.31}, "process": {"Point_Scores": {"stat": 90.41, "null_IO": 86.3, "sh_proc": 72.73, "sig_hndl": 91.1, "sig_inst": 88.24, "slct_TCP": 98.86, "exec_proc": 94.12, "fork_proc": 100.0, "null_call": 79.37, "open_close": 83.73}, "Total_Scores": 88.89}, "Total_Scores": 88.17}, "network": {"bandwidth": {"Point_Scores": {"TCP_RR": 94.4, "UDP_RR": 94.74, "TCP_CRR": 55.42, "TCP_s01_RX": 72.39, "TCP_s01_TX": 76.16, "TCP_s03_RX": 94.48, "TCP_s03_TX": 91.4, "TCP_s04_RX": 86.36, "TCP_s04_TX": 94.71, "TCP_s05_RX": 84.5, "TCP_s05_TX": 98.4, "TCP_s10_RX": 84.22, "TCP_s10_TX": 92.34, "TCP_stream": 81.22, "UDP_s01_RX": 100.0, "UDP_s01_TX": 95.45, "UDP_s03_RX": 96.31, "UDP_s03_TX": 98.95, "UDP_s05_RX": 100.0, "UDP_s05_TX": 97.99, "UDP_s10_RX": 100.0, "UDP_s10_TX": 95.71, "TCP_stream_r": 77.54, "TCP_bw_000001B": 93.75, "TCP_bw_000002B": 100.0, "TCP_bw_000004B": 100.0, "TCP_bw_000008B": 87.4, "TCP_bw_000016B": 86.12, "TCP_bw_000032B": 88.16, "TCP_bw_000064B": 96.89, "TCP_bw_000128B": 93.04, "TCP_bw_000256B": 99.2, "TCP_bw_000512B": 88.04, "TCP_bw_001000B": 100.0, "TCP_bw_002000B": 74.89, "TCP_bw_004000B": 73.51, "TCP_bw_008000B": 68.81, "TCP_bw_016000B": 62.33, "TCP_bw_032000B": 61.7, "TCP_bw_064000B": 62.4}, "Total_Scores": 94.2}, "local_lat": {"Point_Scores": {"TCP": 91.76, "UDP": 91.49, "Pipe": 100.0, "AF_Unix": 100.0, "TCP_con": 59.09, "TCP_lat_000001B": 97.18, "TCP_lat_000002B": 97.18, "TCP_lat_000004B": 97.18, "TCP_lat_000008B": 97.18, "TCP_lat_000016B": 97.18, "TCP_lat_000032B": 98.57, "TCP_lat_000064B": 97.14, "TCP_lat_000128B": 97.14, "TCP_lat_000256B": 100.0, "TCP_lat_000512B": 98.46, "TCP_lat_001000B": 91.8, "TCP_lat_002000B": 89.8, "TCP_lat_004000B": 81.63, "TCP_lat_008000B": 79.59, "TCP_lat_016000B": 100.0, "TCP_lat_032000B": 85.71, "TCP_lat_064000B": 100.0}, "Total_Scores": 93.65}, "Total_Scores": 93.86}, "storage": {"iops": {"Point_Scores": {"fio_read": 46.5, "fio_write": 56.99, "fio_randread": 2.54, "fio_randwrite": 7.59}, "Total_Scores": 15.03}, "bandwidth": {"Point_Scores": {"fio_read": 55.87, "fio_write": 56.95, "fio_randread": 2.48, "fio_randwrite": 7.53}, "Total_Scores": 15.62}, "Total_Scores": 31.38, "Iozone-Cached": {"Point_Scores": {"read": 95.65, "fread": 96.21, "write": 44.0, "fwrite": 82.3, "reread": 95.57, "freread": 96.21, "rewrite": 56.09, "frewrite": 71.94, "bkwd_read": 95.38, "random_read": 95.38, "stride_read": 96.38, "random_write": 60.68, "recored_rewrite": 70.22}, "Total_Scores": 87.1}, "Iozone-DirectIO": {"Point_Scores": {"read": 25.78, "fread": 95.98, "write": 36.52, "fwrite": 54.58, "reread": 26.26, "freread": 95.73, "rewrite": 37.36, "frewrite": 63.97, "bkwd_read": 19.82, "random_read": 21.12, "stride_read": 25.41, "random_write": 33.08, "recored_rewrite": 92.66}, "Total_Scores": 44.02}}, "algorithm": {"unzip": {"Point_Scores": {"tar": 91.0}, "Total_Scores": 91.0}, "Total_Scores": 95.0, "digital sign": {"Point_Scores": {"dsa": 96.97, "rsa": 95.73, "ecdsa": 95.26}, "Total_Scores": 95.97}, "digital verify": {"Point_Scores": {"dsa": 94.36, "rsa": 95.86, "ecdsa": 95.05}, "Total_Scores": 95.08}, "hash algorithm": {"Point_Scores": {"md5": 100.0, "sha1": 88.41, "sha256": 44.05, "sha512": 95.51}, "Total_Scores": 92.98}, "symmetric cyphers": {"Point_Scores": {"rc4": 97.21, "des cbc": 90.58, "rc2 cbc": 90.42, "cast cbc": 90.86, "des ede3": 91.46, "idea cbc": 95.29, "seed cbc": 89.42, "aes-128 cbc": 73.61, "aes-128 ige": 74.49, "aes-192 cbc": 72.02, "aes-192 ige": 72.16, "aes-256 cbc": 69.86, "aes-256 ige": 70.18, "blowfish cbc": 95.33}, "Total_Scores": 87.89}}, "application": {"jdk": {"Point_Scores": {"scimark": 95.96}, "Total_Scores": 95.96}, "hadoop": {"Point_Scores": {"HadoopJoin": 66.67, "HadoopScan": 78.85, "HadoopSort": 75.28, "HadoopBayes": 100.0, "HadoopKmeans": 88.23, "HadoopPagerank": 70.69, "HadoopTerasort": 74.61, "HadoopWordcount": 92.13, "HadoopAggregation": 77.1, "HadoopDfsioe-read": 79.55, "HadoopDfsioe-Write": 26.86}, "Total_Scores": 73.02}, "compile": {"Point_Scores": {"kernel-dev_01": 91.04, "kernel-dev_02": 91.44, "kernel-dev_04": 91.44, "kernel-dev_08": 90.8, "kernel-dev_16": 90.49, "kernel-dev_32": 94.69, "kernel-dev_64": 96.17, "kernel-dev_72": 96.17}, "Total_Scores": 92.76}, "sysbench": {"Point_Scores": {"avg": 89.97, "max": 64.42, "min": 99.19, "percentile": 88.07}, "Total_Scores": 84.38}, "Total_Scores": 99.86, "nginx_64_core_wrps": {"Point_Scores": {"wrps": 100.0}, "Total_Scores": 100.0}, "nginx_32_core_cross_wrps": {"Point_Scores": {"wrps": 100.0}, "Total_Scores": 100.0}, "nginx_32_core_local_wrps": {"Point_Scores": {"wrps": 96.91}, "Total_Scores": 84.73}}, "cpu_sincore": {"sincore_int": {"Point_Scores": {"IDEA": 87.49, "dhry2": 97.17, "HUFFMAN": 95.22, "BITFIELD": 95.24, "coremark": 95.52, "ASSIGNMENT": 95.45, "STRING SORT": 95.42, "integer_add": 97.88, "integer_bit": 93.44, "integer_div": 54.34, "integer_mod": 55.83, "integer_mul": 97.78, "FP EMULATION": 95.36, "NUMERIC SORT": 94.91}, "Total_Scores": 93.34}, "Total_Scores": 96.16, "sincore_misc": {"Point_Scores": {"stress_ng": 98.84, "sysbench_prime": 53.69}, "Total_Scores": 89.93}, "sincore_float": {"Point_Scores": {"FOURIER": 95.32, "scimark": 94.96, "float_add": 97.78, "float_div": 93.2, "float_mul": 97.78, "NEURAL NET": 95.35, "linpack_sp": 94.61, "LU DECOMPOSITION": 95.08, "float_bogomflops": 97.29}, "Total_Scores": 96.25}, "openblas_value": {"Point_Scores": {"TEST_01_200x200": 75.49, "TEST_02_400x400": 95.48, "TEST_03_1000x1000": 95.72, "TEST_04_2000x2000": 95.15, "TEST_05_3000x3000": 95.29, "TEST_06_4000x4000": 95.3}, "Total_Scores": 95.83}, "sincore_double": {"Point_Scores": {"double_add": 97.78, "double_div": 98.39, "double_mul": 97.78, "linpack_dp": 96.47, "double_bogomflops": 97.73}, "Total_Scores": 97.55}, "sincore_unixbench": {"Point_Scores": {"ub_pipe_ctx": 85.94, "ub_Dhrystone": 97.77, "ub_Whetstone": 100.0, "ub_pipe_Throughput": 72.89, "ub_Execl_Throughput": 82.08, "ub_Process_Creation": 100.0, "ub_File_Cpy_256buf_500blk": 100.0, "ub_File_Cpy_1024buf_2000blk": 99.43, "ub_File_Cpy_4096buf_8000blk": 99.09, "ub_shell_script_1_concurrent": 59.43, "ub_shell_script_8_concurrent": 59.79}, "Total_Scores": 92.16}, "openblas_efficiency": {"Point_Scores": {"TEST_01_200x200": 74.63, "TEST_02_400x400": 95.24, "TEST_03_1000x1000": 95.45, "TEST_04_2000x2000": 95.51, "TEST_05_3000x3000": 94.44, "TEST_06_4000x4000": 95.56}, "Total_Scores": 96.25}}, "cpu_multicore": {"Total_Scores": 70.04, "multicore_misc": {"Point_Scores": {"stress_ng": 100.0, "sysbench_prime": 47.03}, "Total_Scores": 77.21}, "multicore_unixbench": {"Point_Scores": {"ub_pipe_ctx": 100.0, "ub_Dhrystone": 100.0, "ub_Whetstone": 97.46, "ub_pipe_Throughput": 75.17, "ub_Execl_Throughput": 94.56, "ub_Process_Creation": 64.08, "ub_File_Cpy_256buf_500blk": 100.0, "ub_File_Cpy_1024buf_2000blk": 100.0, "ub_File_Cpy_4096buf_8000blk": 100.0, "ub_shell_script_1_concurrent": 83.41, "ub_shell_script_8_concurrent": 74.97}, "Total_Scores": 100.0}, "openblas_value_10_cores": {"Point_Scores": {"TEST_01_200x200": 22.47, "TEST_02_400x400": 68.18, "TEST_03_1000x1000": 97.74, "TEST_04_2000x2000": 95.48, "TEST_05_3000x3000": 95.5, "TEST_06_4000x4000": 95.36}, "Total_Scores": 75.56}, "openblas_value_32_cores": {"Point_Scores": {"TEST_01_200x200": 56.3, "TEST_02_400x400": 39.0, "TEST_03_1000x1000": 33.09, "TEST_04_2000x2000": 35.76, "TEST_05_3000x3000": 35.74, "TEST_06_4000x4000": 34.71}, "Total_Scores": 38.43}, "openblas_value_64_cores": {"Point_Scores": {"TEST_01_200x200": 34.94, "TEST_02_400x400": 100.0, "TEST_03_1000x1000": 43.25, "TEST_04_2000x2000": 39.74, "TEST_05_3000x3000": 37.35, "TEST_06_4000x4000": 40.94}, "Total_Scores": 66.95}, "openblas_efficiency_10_cores": {"Point_Scores": {"TEST_01_200x200": 22.76, "TEST_02_400x400": 67.69, "TEST_03_1000x1000": 98.46, "TEST_04_2000x2000": 95.71, "TEST_05_3000x3000": 95.71, "TEST_06_4000x4000": 95.77}, "Total_Scores": 75.0}, "openblas_efficiency_32_cores": {"Point_Scores": {"TEST_01_200x200": 57.14, "TEST_02_400x400": 37.93, "TEST_03_1000x1000": 32.2, "TEST_04_2000x2000": 35.09, "TEST_05_3000x3000": 36.21, "TEST_06_4000x4000": 35.0}, "Total_Scores": 38.89}, "openblas_efficiency_64_cores": {"Point_Scores": {"TEST_01_200x200": 34.78, "TEST_02_400x400": 100.0, "TEST_03_1000x1000": 43.18, "TEST_04_2000x2000": 40.0, "TEST_05_3000x3000": 35.71, "TEST_06_4000x4000": 42.31}, "Total_Scores": 66.67}}}}	
+\.
+
+
+--
+-- Name: task_task_id_seq; Type: SEQUENCE SET; Schema: public; Owner: caliperuser
+--
+
+SELECT pg_catalog.setval('task_task_id_seq', 3, true);
+
+
+--
+-- Name: auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: task_task_pkey; Type: CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY task_task
+    ADD CONSTRAINT task_task_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: caliperuser
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: caliperuser
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

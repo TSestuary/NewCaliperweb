@@ -1,0 +1,11 @@
+#ignore *.pyc files
+*.pyc
+
+#ignore database migration file
+000*
+
+#ignore yaml and json
+*.yaml
+*.json
+
+
