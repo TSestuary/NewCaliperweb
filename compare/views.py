@@ -12,8 +12,10 @@ FUNC_STR = 'Functional'
 
 # Create your views here.
 def compare(request):
-    tasks = Task.objects.all()
-    task_num = Task.objects.all().count()
+    platform_multi_select = request.POST.getlist('platform_multi_select')
+    # tasks = Task.objects.all()
+    tasks = Task.objects.filter(name__in=platform_multi_select)
+    task_num = tasks.count()
     dic_total = {}
     dic_sum = get_sum_dics(tasks)
     dic_total['dic_sum'] = json.dumps(dic_sum)
@@ -21,11 +23,12 @@ def compare(request):
         if dic_sum[key]:
             key = _deal_keyword(key)
             dic_total[key] = True 
+    dic_total['platforms'] = platform_multi_select
     return render(request, 'compare.html',dic_total)
 
 def test_aspect(request,aspect):
     tasks = Task.objects.all().order_by("id")
-    task_num = Task.objects.all().count()
+    task_num = tasks.count()
     dic_total = {}
     test_point=[]
     dic_aspect = get_detail_data(tasks, PERF_STR, aspect)   
@@ -37,6 +40,10 @@ def test_aspect(request,aspect):
     test_point=sorted(test_point)
     dic_total['aspect']=aspect 
     return render(request, 'test_aspect.html', {'dic_total':dic_total,'test_point':test_point})
+
+def select(request):
+    tasks = Task.objects.all()
+    return render(request, 'select.html',{'tasks':tasks})
 
 def get_sum_dics(tasks):
     dic = {}

@@ -145,3 +145,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 DOWNLOAD_PATH = os.path.join(BASE_DIR, "resources/download")
 DOWNLOAD_NAME="caliper-setup_ubuntu.tar.gz"
+UPLOAD_PATH = os.path.join(BASE_DIR, "resources/upload")

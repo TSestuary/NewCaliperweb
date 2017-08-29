@@ -30,6 +30,9 @@ urlpatterns = [
     url(r'^downloadfile$', login_views.file_Download, name='downloadfile'),
 
     url(r'^task$',task_views.home,name='home'),
+    url(r'^test_post$',task_views.test_post,name='test_post'),
+    url(r'^save_data$',task_views.save_data,name='save_data'),
+    url(r'^compare/select$',compare_views.select,name='select'),
     url(r'^compare$',compare_views.compare,name='compare'),
     url(r'^compare/(\w+)/$',compare_views.test_aspect,name='test_aspect'),
     url(r'^trend$',trend_views.trend,name='trend'),

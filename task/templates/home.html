@@ -7,13 +7,25 @@
         <th>Version</th>
         <th>Platform</th>
         <th>Target</th>
-        <th>DateTime</th>
+        <th>OS_Version</th>
         <th>User</th>
+        <th>DateTime</th>
         <th>View</th>
         <th>Delete</th>
     </thead>
     <tbody>
-            
+            {% for tab in tasks %}
+            <tr>
+                <td></td>
+                <td>{{tab.name}}</td>
+                <td></td>
+                <td>{{tab.configuration.OS_Version}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% endfor %}
     </tbody>
 </table>
 {% endblock content%}
@@ -21,7 +33,7 @@
 <script>
     $(function(){
         $('.dataTables-example').DataTable({
-        "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 5,6 ] }]
+        "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 6,7 ] }]
         });
     })
 </script>
