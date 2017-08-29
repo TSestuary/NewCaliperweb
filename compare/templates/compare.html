@@ -4,7 +4,6 @@
 
 {% block content %}
 <div><input type="hidden" id="total_tst" value="{{ dic_sum }}"> </div>
-<div><input type="hidden" id="platforms" value="{{ platforms }}"> </div>
 <div class="page-header">
     <h1> Caliper Benchmarking Report [ version-yyyymmdd ] </h1>
 </div>
@@ -82,8 +81,18 @@
 
     <li><b>Test Categories :</b>
         <i>
-            <a href="/compare/latency" target="_blank">LATENCY</a>,
-            <a href="/compare/memory" target="_blank">MEMORY</a>,
+            <form id="latency" style="display: inline" method="POST" action="/compare/latency/" target="_blank">
+            {% csrf_token %}
+                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <a onclick="submitform($(this))">LATENCY</a>
+            </form>
+            ,
+            <form id="memory" style="display: inline" method="POST" action="/compare/memory/" target="_blank">
+            {% csrf_token %}
+                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <a onclick="submitform($(this))">MEMORY</a>
+            </form>
+            ,
             <a href="/compare/application" target="_blank"> APPLICATION</a>,
             <a href="/compare/cpu_multicore" target="_blank">CPU_MULTICORE</a>,
             <a href="/compare/storage" target="_blank">STORAGE</a>,
@@ -151,5 +160,11 @@
             })
         $('#platform_configuration td div').css("color","black");
     })
+
+    function submitform(e){
+        id=e.parent().attr("id");
+        console.log(id);
+        document.getElementById(id).submit();
+    }
 </script>
 {% endblock %}

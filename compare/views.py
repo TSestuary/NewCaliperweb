@@ -27,7 +27,9 @@ def compare(request):
     return render(request, 'compare.html',dic_total)
 
 def test_aspect(request,aspect):
-    tasks = Task.objects.all().order_by("id")
+    platforms = eval(request.POST['platforms'])
+    tasks = Task.objects.filter(name__in=platforms)
+    # tasks = Task.objects.all().order_by("id")
     task_num = tasks.count()
     dic_total = {}
     test_point=[]
