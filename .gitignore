@@ -8,4 +8,7 @@
 *.yaml
 *.json
 
+#ignore
+resources/upload/**
+
 
