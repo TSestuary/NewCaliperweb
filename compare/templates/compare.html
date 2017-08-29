@@ -93,12 +93,41 @@
                 <a onclick="submitform($(this))">MEMORY</a>
             </form>
             ,
-            <a href="/compare/application" target="_blank"> APPLICATION</a>,
-            <a href="/compare/cpu_multicore" target="_blank">CPU_MULTICORE</a>,
-            <a href="/compare/storage" target="_blank">STORAGE</a>,
-            <a href="/compare/cpu_sincore" target="_blank">CPU_SINCORE</a>,
-            <a href="/compare/algorithm" target="_blank">ALGORITHM</a> and
-            <a href="/compare/network" target="_blank">NETWORK</a>
+            <form id="application" style="display: inline" method="POST" action="/compare/application/" target="_blank">
+            {% csrf_token %}
+                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <a onclick="submitform($(this))">APPLICATION</a>
+            </form>
+            ,
+            <form id="cpu_multicore" style="display: inline" method="POST" action="/compare/cpu_multicore/" target="_blank">
+            {% csrf_token %}
+                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <a onclick="submitform($(this))">CPU_MULTICORE</a>
+            </form>
+            ,
+            <form id="storage" style="display: inline" method="POST" action="/compare/storage/" target="_blank">
+            {% csrf_token %}
+                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <a onclick="submitform($(this))">STORAGE</a>
+            </form>
+            ,
+            <form id="cpu_sincore" style="display: inline" method="POST" action="/compare/cpu_sincore/" target="_blank">
+            {% csrf_token %}
+                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <a onclick="submitform($(this))">CPU_SINCORE</a>
+            </form>
+            ,
+            <form id="algorithm" style="display: inline" method="POST" action="/compare/algorithm/" target="_blank">
+            {% csrf_token %}
+                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <a onclick="submitform($(this))">ALGORITHM</a>
+            </form>
+             and
+             <form id="network" style="display: inline" method="POST" action="/compare/network/" target="_blank">
+            {% csrf_token %}
+                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <a onclick="submitform($(this))">NETWORK</a>
+            </form>
         </i>
     </li>
 
