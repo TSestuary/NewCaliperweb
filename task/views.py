@@ -35,9 +35,7 @@ def test_post(request):
 @csrf_exempt 
 def save_data(request):
     save_path = request.POST['save_path']
-    json_path = request.POST['json_path']
-    with open(json_path,'r') as load_f:
-        json_data = json.load(load_f)
+    json_data = eval(request.POST['json_data'])
     task = Task(name=json_data['name'])
     task.configuration = json_data['Configuration']
     task.results = json_data['results']
