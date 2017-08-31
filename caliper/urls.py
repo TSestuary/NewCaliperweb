@@ -30,6 +30,9 @@ urlpatterns = [
     url(r'^downloadfile$', login_views.file_Download, name='downloadfile'),
 
     url(r'^task$',task_views.home,name='home'),
+    url(r'^task/(\w+)/$',task_views.result,name='result'),
+    url(r'^ajax_showresult$',task_views.ajax_showresult,name='ajax_showresult'),
+    url(r'^downloadresult/(.+)$', task_views.result_Download, name='downloadresult'),
     url(r'^test_post$',task_views.test_post,name='test_post'),
     url(r'^save_data$',task_views.save_data,name='save_data'),
     url(r'^compare/select$',compare_views.select,name='select'),

@@ -11,6 +11,7 @@
         <th>User</th>
         <th>DateTime</th>
         <th>View</th>
+        <th>Download</th>
         <th>Delete</th>
     </thead>
     <tbody>
@@ -22,7 +23,10 @@
                 <td>{{tab.configuration.OS_Version}}</td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>{% ifequal tab.output_path '' %}<i class="fa fa-search" aria-hidden="true"></i>
+                {% else %}<a href="/task/{{tab.id}}" target="_blank"><i class="fa fa-search" aria-hidden="true"></i></a>{% endifequal %}</td>
+                <td>{% ifequal tab.output_path '' %}<i class="fa fa-download" aria-hidden="true"></i>
+                {% else %}<a href="downloadresult/{{tab.output_path}}"><i class="fa fa-download" aria-hidden="true"></i></a>{% endifequal %}</td>
                 <td></td>
             </tr>
             {% endfor %}

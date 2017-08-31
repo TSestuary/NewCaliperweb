@@ -44,7 +44,7 @@ def test_aspect(request,aspect):
     return render(request, 'test_aspect.html', {'dic_total':dic_total,'test_point':test_point})
 
 def select(request):
-    tasks = Task.objects.all()
+    tasks = Task.objects.all().order_by("-id")
     return render(request, 'select.html',{'tasks':tasks})
 
 def get_sum_dics(tasks):
