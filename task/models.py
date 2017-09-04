@@ -9,6 +9,7 @@ class Task(models.Model):
     configuration = JSONField()
     results = JSONField()
     output_path = models.CharField(max_length=500)
+    time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):  # __unicode__ on Python 2
         return self.name

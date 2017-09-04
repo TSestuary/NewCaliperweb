@@ -12,9 +12,13 @@ FUNC_STR = 'Functional'
 
 # Create your views here.
 def compare(request):
-    platform_multi_select = request.POST.getlist('platform_multi_select')
+    platforms = eval(request.POST['platforms'])
+    ids=[]
+    for platform in platforms:
+        oneid = Task.objects.filter(name=platform,time=request.POST[platform]).all().values("id")
+        ids.append(oneid[0]['id'])
     # tasks = Task.objects.all()
-    tasks = Task.objects.filter(name__in=platform_multi_select)
+    tasks = Task.objects.filter(id__in=ids)
     task_num = tasks.count()
     dic_total = {}
     dic_sum = get_sum_dics(tasks)
@@ -23,7 +27,7 @@ def compare(request):
         if dic_sum[key]:
             key = _deal_keyword(key)
             dic_total[key] = True 
-    dic_total['platforms'] = platform_multi_select
+    dic_total['platforms'] = platforms
     return render(request, 'compare.html',dic_total)
 
 def test_aspect(request,aspect):
@@ -44,8 +48,21 @@ def test_aspect(request,aspect):
     return render(request, 'test_aspect.html', {'dic_total':dic_total,'test_point':test_point})
 
 def select(request):
-    tasks = Task.objects.all().order_by("-id")
+    tasks = list(Task.objects.order_by("-id").values_list("name", flat=True))
+    tasks = list(set(tasks))
     return render(request, 'select.html',{'tasks':tasks})
+
+def next_select(request):
+    platform_multi_select = request.POST.getlist('platform_multi_select')
+    platform_dicts = []
+    platforms = []
+    for platform in platform_multi_select:
+        platform_dict = {}
+        platform_dict['name'] = platform
+        platform_dict['date'] = list(Task.objects.filter(name=platform).values_list("time", flat=True))
+        platform_dicts.append(platform_dict)
+        platforms.append(platform)
+    return render(request, 'next_select.html',{"platform_dicts":platform_dicts,"platforms":platforms})
 
 def get_sum_dics(tasks):
     dic = {}
