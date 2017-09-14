@@ -12,12 +12,14 @@ FUNC_STR = 'Functional'
 
 # Create your views here.
 def compare(request):
-    platforms = eval(request.POST['platforms'])
-    ids=[]
-    for platform in platforms:
-        oneid = Task.objects.filter(name=platform,time=request.POST[platform]).all().values("id")
-        ids.append(oneid[0]['id'])
+    # platforms = eval(request.POST['platforms'])
+    # ids=[]
+    # for platform in platforms:
+    #     oneid = Task.objects.filter(name=platform,time=request.POST[platform]).all().values("id")
+    #     ids.append(oneid[0]['id'])
     # tasks = Task.objects.all()
+    ids = eval(request.POST['select_records'])
+    # ids = request.POST.getlist('checkList')
     tasks = Task.objects.filter(id__in=ids)
     task_num = tasks.count()
     dic_total = {}
@@ -27,12 +29,12 @@ def compare(request):
         if dic_sum[key]:
             key = _deal_keyword(key)
             dic_total[key] = True 
-    dic_total['platforms'] = platforms
+    dic_total['ids'] = ids
     return render(request, 'compare.html',dic_total)
 
 def test_aspect(request,aspect):
-    platforms = eval(request.POST['platforms'])
-    tasks = Task.objects.filter(name__in=platforms)
+    ids = eval(request.POST['ids'])
+    tasks = Task.objects.filter(id__in=ids)
     # tasks = Task.objects.all().order_by("id")
     task_num = tasks.count()
     dic_total = {}

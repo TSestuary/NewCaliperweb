@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'newbase.html' %}
 {% load staticfiles %}
 {% block title %}Caliper | Compare:{{dic_total.aspect| capfirst}}{% endblock title%}
 
@@ -178,6 +178,12 @@
 
 {% block script %}
 <script src="/static/js/performance.js"></script>
+<script src="/static/js/sensei-json.js"></script>
+<script src="/static/js/sensei-grid.js"></script>
+<script src="/static/js/sensei-editors.js"></script>
+<script src="/static/js/highcharts/highcharts.js"></script>
+<script src="/static/js/highcharts/highcharts-more.js"></script>
+<script src="/static/js/highcharts/exporting.js"></script>
 <script>
     $(function(){
         $('td div').each(function(){

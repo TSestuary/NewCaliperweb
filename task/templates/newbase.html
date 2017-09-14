@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Caliper{% endblock %}</title>
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/static/css/datatable.min.css" rel="stylesheet">
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    {% block link %}{% endblock %}
+
+</head>
+
+<body class="top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-static-top" role="navigation">
+            
+            <div class="navbar-collapse collapse" id="navbar">
+                {% block nav %}{% endblock nav %}
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <a style="cursor:default;"><i class="fa fa-user fa-lg" style="color:#1ab394;"></i>
+                        <span>
+                            {% if user.is_authenticated %}
+                            <strong style="font-weight:500">
+                                {{user.username}}
+                            </strong>
+                            {%endif%}
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/">
+                            <i class="fa fa-sign-out" style="color:#1ab394;"></i><span style="font-weight:500"> Log out</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="container-fluid">
+        {% block content %}{% endblock %}
+            </div>
+        </div>
+        <div class="footer">
+            <div style="text-align: center;">
+                <strong>Copyright</strong> <a href="http://www.open-estuary.org" target="_blank">Open Estuary</a> &copy;  
+            </div> 
+        </div>
+
+        </div>
+        </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="/static/js/jquery-2.1.1.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/datatables.min.js"></script>
+
+    {% block script %}{% endblock %}
+
+</body>
+
+</html>

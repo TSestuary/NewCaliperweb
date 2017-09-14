@@ -1,7 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'newbase.html' %}
 {% load staticfiles %}
 {% block title %}Caliper | Compare{% endblock title%}
 
+{% block nav %}
+<ul class="nav navbar-nav">
+    <li class="active">
+        <a aria-expanded="false" role="button" href="/task"><i class="fa fa-reply" aria-hidden="true"></i> Back to Task page</a>
+    </li>
+</ul>
+{% endblock nav %}
 {% block content %}
 <div><input type="hidden" id="total_tst" value="{{ dic_sum }}"> </div>
 <div class="page-header">
@@ -83,49 +90,49 @@
         <i>
             <form id="latency" style="display: inline" method="POST" action="/compare/latency/" target="_blank">
             {% csrf_token %}
-                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <input type="hidden" name="ids" value="{{ ids }}" /> 
                 <a onclick="submitform($(this))">LATENCY</a>
             </form>
             ,
             <form id="memory" style="display: inline" method="POST" action="/compare/memory/" target="_blank">
             {% csrf_token %}
-                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <input type="hidden" name="ids" value="{{ ids }}" /> 
                 <a onclick="submitform($(this))">MEMORY</a>
             </form>
             ,
             <form id="application" style="display: inline" method="POST" action="/compare/application/" target="_blank">
             {% csrf_token %}
-                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <input type="hidden" name="ids" value="{{ ids }}" /> 
                 <a onclick="submitform($(this))">APPLICATION</a>
             </form>
             ,
             <form id="cpu_multicore" style="display: inline" method="POST" action="/compare/cpu_multicore/" target="_blank">
             {% csrf_token %}
-                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <input type="hidden" name="ids" value="{{ ids }}" /> 
                 <a onclick="submitform($(this))">CPU_MULTICORE</a>
             </form>
             ,
             <form id="storage" style="display: inline" method="POST" action="/compare/storage/" target="_blank">
             {% csrf_token %}
-                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <input type="hidden" name="ids" value="{{ ids }}" /> 
                 <a onclick="submitform($(this))">STORAGE</a>
             </form>
             ,
             <form id="cpu_sincore" style="display: inline" method="POST" action="/compare/cpu_sincore/" target="_blank">
             {% csrf_token %}
-                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <input type="hidden" name="ids" value="{{ ids }}" /> 
                 <a onclick="submitform($(this))">CPU_SINCORE</a>
             </form>
             ,
             <form id="algorithm" style="display: inline" method="POST" action="/compare/algorithm/" target="_blank">
             {% csrf_token %}
-                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <input type="hidden" name="ids" value="{{ ids }}" /> 
                 <a onclick="submitform($(this))">ALGORITHM</a>
             </form>
              and
              <form id="network" style="display: inline" method="POST" action="/compare/network/" target="_blank">
             {% csrf_token %}
-                <input type="hidden" name="platforms" value="{{ platforms }}" /> 
+                <input type="hidden" name="ids" value="{{ ids }}" /> 
                 <a onclick="submitform($(this))">NETWORK</a>
             </form>
         </i>
@@ -179,6 +186,12 @@
 
 {% block script %}
 <script src="/static/js/perf_sum_result.js"></script>
+<script src="/static/js/sensei-json.js"></script>
+<script src="/static/js/sensei-grid.js"></script>
+<script src="/static/js/sensei-editors.js"></script>
+<script src="/static/js/highcharts/highcharts.js"></script>
+<script src="/static/js/highcharts/highcharts-more.js"></script>
+<script src="/static/js/highcharts/exporting.js"></script>
 
 <script>
     $(function(){

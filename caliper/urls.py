@@ -21,6 +21,7 @@ from login import views as login_views
 from task import views as task_views
 from compare import views as compare_views
 from trend import views as trend_views
+from assign import views as assign_views
 
 urlpatterns = [
     url(r'^$',login_views.main,name='main'),
@@ -40,6 +41,7 @@ urlpatterns = [
     url(r'^compare$',compare_views.compare,name='compare'),
     url(r'^compare/(\w+)/$',compare_views.test_aspect,name='test_aspect'),
     url(r'^trend$',trend_views.trend,name='trend'),
+    url(r'^assign$',assign_views.assign,name='assign'),
 
     url(r'^admin/', admin.site.urls),
     url(r'static/(?P<path>.*)$', serve,

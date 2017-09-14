@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'task',
     'login',
     'trend',
-    'compare'
+    'compare',
+    'assign'
 ]
 
 MIDDLEWARE = [

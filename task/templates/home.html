@@ -1,10 +1,109 @@
-{% extends 'base.html' %}
-{% block title %}Caliper | Test Task{% endblock title%}
+{% extends 'newbase.html' %}
+{% block title %}Caliper | Task{% endblock title%}
+{% block link %}
+<link href="/static/css/jquery.dataTables.css" rel="stylesheet">
+<style>
+    .classfy{
+        float: left;
+        width: 100px;
+        font-size: 14px;
+        color: #191e25;
+    }
 
+    .ui_li{
+        float: left;
+        display: inline-block;
+        color: #29bb9c;
+        cursor: pointer;
+        font-size: 14px;
+        margin-left: 10px;
+        margin-right: 12px;
+    }
+
+    .ul_div {
+        margin-left:-20px;
+    }
+
+    .selected_li {
+        background-color:#29bb9c;
+        border-radius:5px;
+        color:#FFF;
+    }
+
+        .addselect {
+            border-radius: 2px;
+            display: inline-block;
+            background-color: #ccc;
+            height: 14px;
+            width: 16px;
+            text-align: center;
+            color: #fff;
+            font-size: 9px;
+            font-family: Arial;
+            position: relative;
+            margin-left: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            vertical-align: top;
+            top: 1px;
+        }
+ 
+        .addselect select {
+            width: 44px;
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+            color:black;
+        }
+ 
+        table.dataTable tbody th, table.dataTable th, table.dataTable tbody td {
+            font-size: 12px;
+            text-align: left;
+        }
+ 
+        table.dataTable thead th {
+            padding: 0 8px;
+        }
+    </style>
+{% endblock %}
 {% block content %}
-<table class="table table-striped table-bordered table-hover dataTables-example">
-    <thead>
-        <th>Version</th>
+<div id="select_pt">
+<div class="row">
+    <div class="classfy col-lg-2 col-md-2 col-xs-2"><h4> Platform:</h4></div>
+    <div id="platform_div" class="col-lg-10 col-md-10 col-xs-10 ul_div">
+        <ul><li class='ui_li selected_li' id="pt_all">All</li></ul>
+    </div>
+</div><br>
+</div>
+<div id="select_os">
+<div class="row">
+    <div class="classfy col-lg-2 col-md-2 col-xs-2"><h4>OS_Version:</h4></div>
+    <div id="os_div" class="col-lg-10 col-md-10 col-xs-10 ul_div">
+        <ul><li class='ui_li selected_li' id="os_all">All</li></ul>
+    </div>
+</div><br>
+</div>
+<div class="domab">
+    <!--<button id="button" style="float:left;">删除选中的行</button>-->
+    <div style="float:left; position:relative; z-index:9999;height:100%;">
+        
+    </div>
+    <div style="clear:both;"></div>
+</div>
+<form id="compareForm" method="POST" action="/compare">
+<div class="wt100" style="position:relative; overflow:hidden; height:100%">
+    
+    {% csrf_token %}
+    <input type="hidden" id="select_records" name="select_records" /> 
+    <table id="compare_table" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <!--<th style=" width:1px; padding:0"></th>-->
+            <th style="width:30px; padding:10px 0 10px 10px">
+                <!--<input type="checkbox" id="checkAll">--><p></p></th>
+            <th>Version</th>
         <th>Platform</th>
         <th>Target</th>
         <th>OS_Version</th>
@@ -13,32 +112,183 @@
         <th>View</th>
         <th>Download</th>
         <th>Delete</th>
-    </thead>
-    <tbody>
+        </tr>
+        </thead>
+ 
+        <tfoot>
+        <tr>
+            <!--<th></th>-->
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </tfoot>
+        <tbody>
             {% for tab in tasks %}
-            <tr>
-                <td></td>
+        <tr>
+            <!--<td></td>-->
+            <td>
+                <input type="checkbox" name="checkList" value="{{tab.id}}"></td>
+            <td></td>
                 <td>{{tab.name}}</td>
                 <td></td>
                 <td>{{tab.configuration.OS_Version}}</td>
                 <td></td>
-                <td></td>
+                <td>{{tab.time|date:"Y-m-d H:i:s"}}</td>
                 <td>{% ifequal tab.output_path '' %}<i class="fa fa-search" aria-hidden="true"></i>
                 {% else %}<a href="/task/{{tab.id}}" target="_blank"><i class="fa fa-search" aria-hidden="true"></i></a>{% endifequal %}</td>
                 <td>{% ifequal tab.output_path '' %}<i class="fa fa-download" aria-hidden="true"></i>
                 {% else %}<a href="downloadresult/{{tab.output_path}}"><i class="fa fa-download" aria-hidden="true"></i></a>{% endifequal %}</td>
                 <td></td>
-            </tr>
-            {% endfor %}
-    </tbody>
-</table>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>
+    <button type="button" class="btn btn-w-m btn-primary" id="compare_btn">Compare</button>
+</div>
+</div>
+</form>
+
+
+
 {% endblock content%}
+
 {% block script %}
 <script>
-    $(function(){
-        $('.dataTables-example').DataTable({
-        "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 6,7 ] }]
-        });
-    })
+$(function () {
+ 
+           var table = $('#compare_table').DataTable({
+               "lengthChange": false,//是否允许用户自定义显示数量
+               "bPaginate": true, //翻页功能
+               "searching": true,//本地搜索
+               "Info": true,//页脚信息
+               "autoWidth": true,//自动宽度
+               "columnDefs": [
+                   {
+                       orderable: false,
+ 
+                       targets: 0 },
+                   
+                   {
+                       orderable: false,
+ 
+                       targets: 7 },
+                   {
+                       orderable: false,
+ 
+                       targets: 8 },
+                   {
+                       orderable: false,
+ 
+                       targets: 9 }
+               ],//第0/7/8/9列禁止排序
+ 
+               "order": [
+                   [0, null]
+               ],//第一列排序图标改为默认
+               initComplete: function () {//列筛选
+                   var api = this.api();
+                   api.columns().indexes().flatten().each(function (i) {
+                       if (i == 2 || i == 4 || i == 6) {//删除第一列与第二列的筛选框
+                           var column = api.column(i);
+                           var $span = $('<span class="addselect">▾</span>').appendTo($(column.header()))
+                           var select = $('<select><option value="">All</option></select>')
+                                   .appendTo($(column.header()))
+                                   .on('click', function (evt) {
+                                       evt.stopPropagation();
+                                       var val = $.fn.dataTable.util.escapeRegex(
+                                               $(this).val()
+                                       );
+                                       column
+                                               .search(val ? '^' + val + '$' : '', true, false)
+                                               .draw();
+                                   });
+                           column.data().unique().sort().each(function (d, j) {
+                               function delHtmlTag(str) {
+                                   return str.replace(/<[^>]+>/g, "");//去掉html标签
+                               }
+ 
+                               d = delHtmlTag(d)
+                               select.append('<option value="' + d + '">' + d + '</option>')
+                               $span.append(select)
+                           });
+ 
+                       }
+                   });
+ 
+               }
+ 
+           });
+           
+
+        
+ 
+           //删除选中行
+           $('#compare_table tbody').on('click', 'tr input[name="checkList"]', function () {
+               var $tr = $(this).parents('tr');
+               $tr.toggleClass('selected');
+               var $tmp = $('[name=checkList]:checkbox');
+               $('#checkAll').prop('checked', $tmp.length == $tmp.filter(':checked').length);
+ 
+           });
+ 
+           $('#button').click(function () {
+               table.row('.selected').remove().draw(false);
+           });
+ 
+           //生成table上方的筛选
+           table.column(2).data().unique().sort().each(function (d, j){
+               $("#platform_div ul").append("<li class='ui_li'>"+d+"</li>");
+           })
+
+            table.column(4).data().unique().sort().each(function (d, j){
+                $("#os_div ul").append("<li class='ui_li'>"+d+"</li>");
+            })
+            
+            //筛选
+            $("#select_pt li" ).click(function(){
+                //console.log(this);
+                $(this).parent().children().removeClass("selected_li");
+                $(this).addClass("selected_li");
+
+                var val = $.fn.dataTable.util.escapeRegex(this.innerText);
+                if(val == "All"){
+                    val="";
+                }
+                table.columns(2).search(val ? '^' + val + '$' : '', true, false).draw();
+            })
+
+            $("#select_os li" ).click(function(){
+                //console.log(this.innerText);
+                $(this).parent().children().removeClass("selected_li");
+                $(this).addClass("selected_li");
+                var val = $.fn.dataTable.util.escapeRegex(this.innerText);
+                if(val == "All"){
+                    val="";
+                }
+                table.columns(4).search(val ? '^' + val + '$' : '', true, false).draw();
+            })
+
+            $("#compare_btn").click(function(){
+                var select_records =[];
+                table.rows('.selected').data().each(function(i,j){
+                    select_records.push($(i[0]).val());
+                })
+                console.log(select_records);
+                $("#select_records").val(select_records);
+                document.getElementById("compareForm").submit();
+            })
+       })
+ 
+       
+       
 </script>
 {% endblock %}

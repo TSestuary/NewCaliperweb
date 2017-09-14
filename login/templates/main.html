@@ -81,20 +81,20 @@
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label for="username">Username</label>
-										<input type="text" name="userName" id="userName" class="form-control" required="">
+										<input type="text" name="userName" id="userName" class="form-control" tabindex="1" required="">
 									</div>
 								</div>
 								<div class="row form-group">
 									<div class="col-md-12">
 										<label for="password">Password</label>
-										<input type="password" name="password" id="password" class="form-control" required="">
+										<input type="password" name="password" id="password" class="form-control" tabindex="2" required="">
 									</div>
 								</div>
 
 								<div class="row form-group">
 									<div class="col-md-12">
 										<p id="errormsg" class="fa fa-exclamation-triangle" style="color: red;display:none"> Incorrect Username or Password.</p>
-                                        <button type="button" onclick="verifyUser()" class="btn btn-primary block full-width m-b">Login</button>
+                                        <button id="login_btn" type="button" onclick="verifyUser()" class="btn btn-primary block full-width m-b">Login</button>
 									</div>
 								</div>
 							</form>
@@ -114,6 +114,11 @@
 	<script>
 		$(function(){
 			$(".gtco-loader").fadeOut("slow");
+			$(document).keydown(function(event){  
+				if(event.keyCode==13){  
+				$("#login_btn").click();  
+				}  
+			});
 		})
 
         $.ajaxSetup({

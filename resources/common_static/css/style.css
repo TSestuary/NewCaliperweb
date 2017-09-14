@@ -1203,7 +1203,7 @@ button.dim:active:before {
   padding: 3px 20px 3px 5px;
   position: relative;
 }
-/* PAGINATIN */
+/* PAGINATIN 
 .pagination > .active > a,
 .pagination > .active > span,
 .pagination > .active > a:hover,
@@ -1227,7 +1227,7 @@ button.dim:active:before {
   padding: 4px 10px;
   position: relative;
   text-decoration: none;
-}
+}*/
 /* TOOLTIPS */
 .tooltip-inner {
   background-color: #2F4050;
