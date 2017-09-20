@@ -49,23 +49,6 @@ def test_aspect(request,aspect):
     dic_total['aspect']=aspect 
     return render(request, 'test_aspect.html', {'dic_total':dic_total,'test_point':test_point})
 
-def select(request):
-    tasks = list(Task.objects.order_by("-id").values_list("name", flat=True))
-    tasks = list(set(tasks))
-    return render(request, 'select.html',{'tasks':tasks})
-
-def next_select(request):
-    platform_multi_select = request.POST.getlist('platform_multi_select')
-    platform_dicts = []
-    platforms = []
-    for platform in platform_multi_select:
-        platform_dict = {}
-        platform_dict['name'] = platform
-        platform_dict['date'] = list(Task.objects.filter(name=platform).values_list("time", flat=True))
-        platform_dicts.append(platform_dict)
-        platforms.append(platform)
-    return render(request, 'next_select.html',{"platform_dicts":platform_dicts,"platforms":platforms})
-
 def get_sum_dics(tasks):
     dic = {}
     dic['config'] = {}

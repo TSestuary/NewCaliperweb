@@ -14,6 +14,7 @@ DOWNLOAD_PATH=settings.DOWNLOAD_PATH
 DOWNLOAD_NAME=settings.DOWNLOAD_NAME
 
 def main(request):
+    auth.logout(request)
     return render(request, 'main.html')
 # just for test
 def userIntoCaliperDB(request):
@@ -40,9 +41,6 @@ def userIntoCaliperDB(request):
     user.groups=[com_group]
     return HttpResponse("success")
 
-def login(request):
-    auth.logout(request)
-    return render(request, 'login.html')
 
 def login_verify(request):
     username=request.POST['userName']

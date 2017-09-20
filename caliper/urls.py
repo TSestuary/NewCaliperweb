@@ -20,13 +20,12 @@ from django.views.static import serve
 from login import views as login_views
 from task import views as task_views
 from compare import views as compare_views
-from trend import views as trend_views
 from assign import views as assign_views
 
 urlpatterns = [
     url(r'^$',login_views.main,name='main'),
     url(r'^createuser$',login_views.userIntoCaliperDB,name='createuser'),
-    url(r'^login$',login_views.login,name='login'),
+    
     url(r'^login_verify$', login_views.login_verify, name='login_verify'),
     url(r'^downloadfile$', login_views.file_Download, name='downloadfile'),
 
@@ -36,11 +35,10 @@ urlpatterns = [
     url(r'^downloadresult/(.+)$', task_views.result_Download, name='downloadresult'),
     url(r'^test_post$',task_views.test_post,name='test_post'),
     url(r'^save_data$',task_views.save_data,name='save_data'),
-    url(r'^compare/select$',compare_views.select,name='select'),
-    url(r'^compare/next_select$',compare_views.next_select,name='next_select'),
+
     url(r'^compare$',compare_views.compare,name='compare'),
     url(r'^compare/(\w+)/$',compare_views.test_aspect,name='test_aspect'),
-    url(r'^trend$',trend_views.trend,name='trend'),
+
     url(r'^assign$',assign_views.assign,name='assign'),
 
     url(r'^admin/', admin.site.urls),

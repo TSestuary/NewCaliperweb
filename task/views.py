@@ -20,22 +20,27 @@ UPLOAD_PATH = settings.UPLOAD_PATH
 
 def home(request):
     # tasks = Task.objects.all().order_by(OrderBy(RawSQL("cast(results->%s->%s->>%s as float)", ("Performance","algorithm","Total_Scores")), descending=True))
-    tasks = Task.objects.all().order_by("-id")
-    return render(request,'home.html',{'tasks':tasks})
+    if not request.user.is_authenticated():
+        return render(request,'main.html')
+    else:
+        tasks = Task.objects.all().order_by("-id")
+        return render(request,'home.html',{'tasks':tasks})
 
 def result(request,taskid):
     task = Task.objects.get(id=taskid)
-    output_path = task.output_path
-    dirs = os.path.dirname(output_path)
-    untar_dirs = output_path.replace(".tar.gz", "")
-    if os.path.isdir(untar_dirs):
-        pass
-    else:
-        t = tarfile.open(output_path)
-        t.extractall(path = dirs)
-    result_files = showtree(os.path.join(untar_dirs,"output"))
-    return render(request,'result.html',{'result_files':json.dumps(result_files)}) 
-    # return render(request,'result.html')
+    configuration = task.configuration
+    name = task.name
+    # output_path = task.output_path
+    # dirs = os.path.dirname(output_path)
+    # untar_dirs = output_path.replace(".tar.gz", "")
+    # if os.path.isdir(untar_dirs):
+    #     pass
+    # else:
+    #     t = tarfile.open(output_path)
+    #     t.extractall(path = dirs)
+    # result_files = showtree(os.path.join(untar_dirs,"output"))
+    # return render(request,'result.html',{'result_files':json.dumps(result_files)}) 
+    return render(request,'newresult.html',{"configuration":json.dumps(configuration),"name":name})
 
 def result_Download(request,output_path):
     download_name = os.path.basename(output_path)

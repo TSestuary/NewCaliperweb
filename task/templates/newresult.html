@@ -1,0 +1,41 @@
+{% extends 'newbase.html' %}
+{% block title %}Caliper | Result{% endblock title%}
+{% block link %}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <input type="hidden" id="cfg" value="{{ configuration }}">
+    <div class="row">
+        <h2>Overall Information</h2>
+        <table class="table table-bordered" id="config">
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{name}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Performance Score</h2>
+    </div>
+</div>
+{% endblock content%}
+
+{% block script %}
+<script>
+    var cfg = $("#cfg").val();
+    var cfgobj=eval('('+cfg+')');
+    console.log(cfgobj);
+    var ths=[];
+    for(var key in cfgobj){
+        $("#config thead tr").append("<th>"+key+"</th>");
+        $("#config tbody tr").append("<td>"+cfgobj[key]+"</td>");
+    }
+    console.log(ths);
+</script>
+{% endblock %}

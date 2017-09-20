@@ -146,7 +146,7 @@
                 {% else %}<a href="/task/{{tab.id}}" target="_blank"><i class="fa fa-search" aria-hidden="true"></i></a>{% endifequal %}</td>
                 <td>{% ifequal tab.output_path '' %}<i class="fa fa-download" aria-hidden="true"></i>
                 {% else %}<a href="downloadresult/{{tab.output_path}}"><i class="fa fa-download" aria-hidden="true"></i></a>{% endifequal %}</td>
-                <td></td>
+                <td><a href="#"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
         </tr>
         {% endfor %}
         </tbody>

@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     # new add
     'task',
     'login',
-    'trend',
     'compare',
     'assign'
 ]
