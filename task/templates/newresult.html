@@ -21,7 +21,75 @@
                 </tr>
             </tbody>
         </table>
-        <h2>Performance Score</h2>
+        <h2>Testtool Description</h2>
+        <p> 
+        1. <a href="#"><b>Cachebench</b></a> : CacheBench is a benchmark designed to evaluate the performance of the memory hierarchy.<br>
+        Test cases executed by this tool: bandwidth<br><br>
+
+        2. <a href="#"><b>Compile</b></a>: Compiling a kernel in multiple threads can evaluate the multi core/multi threading capability of the system.This can be used to measure how well the platform is scaling with respect to the number of cores (equivalent to the number threads of compilation) <br>
+         Test cases executed by this tool: kernel-dev_# <br><br>
+
+         3. <a href="#"><b>Coremark</b></a>: CoreMark is a benchmark that aims to measure the performance of central processing units (CPU) used in embedded systems<br><br> 
+
+         4. <a href="#"><b>Dhrystone</b></a>: Dhrystone is a synthetic computing benchmark program developed in 1984 by Reinhold P. Weicker intended to be representative of system (integer) programming<br><br>
+         
+         5. <a href="#"><b>Fio</b></a>: This is the most powerful IO benchmarking tool available today which is very flexible to create various io workloads and to execute them. <br> 
+	Test cases executed by this tool: bandwidth and iops<br><br>
+         
+         6. <a href="#"><b>Hadoop</b></a>: Hibench measures the common hadoop performance parameters like <b>HadoopTerasort, HadoopWordcount, HadoopBayes, HadoopKmeans, HadoopSort, HadoopDfsioe</b> etc. <br><br>
+         
+         7. <a href="#"><b>Iozone</b></a>: This is a filesystem benchmark tool. The benchmark tests file I/O performance for the following operations. <b> Read, write, re-read, re-write, read backwards, read strided, fread, fwrite, random read/write etc </b> <br>
+	Test cases executed by this tool:Iozone-Cached and Iozone-DirectIO<br><br>
+	
+        8. <a href="#"><b>Linpack</b></a>: LINPACK is a collection of Fortran subroutines that analyze and solve linear equations and linear least-squares problems.<br><br>
+         
+         9. <a href="#"><b>Lmbench</b></a> : lmbench is a series of micro benchmarks intended to measure basic operating system and hardware system metrics.<br>
+	 Test cases executed by this tool: local_speed, lb_bw_stream_v#, lb_bw_cross_#_core, lb_bw_local_#_core, lb_lat_cross_#_core, lb_lat_local_#_core<br><br>
+        
+        10. <a href="#"><b>Nbench</b></a>: NBench is a synthetic computing benchmark program developed in the mid-1990s, intended to measure a computer's CPU, FPU, and Memory System speed.<br><br>
+
+        11. <a href="#"><b>Openblas</b></a>: This tool is a set of low-level routines for performing common linear algebra operations such as vector addition, scalar multiplication, dot products, linear combinations, and matrix multiplication<br>
+	Test cases executed by this tool: openblas_value_#_cores and openblas_efficiency_#_cores <br><br>
+
+        12. <a href="#"><b>Openssl</b></a>: OpenSSL is a cryptography toolkit implementing the Secure Sockets Layer ( SSL v2/v3) and Transport Layer Security ( TLS v1) network protocols and related cryptography standards required by them.<br>
+	All the test cases described here has been executed by openssl tool (except unzip test case). <br><br>
+
+        13. <a href="#"><b>Scimark</b></a>: Measure sthe CPU performance.<br><br>
+
+        14. <a href="#"><b>JDK</b></a>: Uses SciMark2 to evaluates the Java performance for scientific and numerical computing.It consists of five computational kernels: <b>FFT, Gauss-Seidel relaxation, Sparse matrix-multiply, Monte Carlo integration, and dense LU factorization</b>.Reports a composite score in approximate <b>Mflops (Millions of floating point operations per second)</b>.<br><br>
+
+        15. <a href="#"><b>Stress-ng</b></a>: Measure sthe CPU performance by running some CPU intensive routines.<br><br>
+
+        16. <a href="#"><b>Sysbench</b></a>: sysbench oltp benchmark evaluate the database performance.<br>
+         Test cases executed by this tool: max, avg, min and percentile<br><br>
+
+        17. <a href="#"><b>Tinymembench</b></a>: This is a simple memory benchmark program, which tries to measure the peak bandwidth of sequential memory accesses and the latency of random memory accesses.<br>
+        Test cases executed by this tool: Tiny latency and Tiny bandwidth 
+        <br><br>
+
+        18. <a href="#"><b>Unixbench</b></a>: A system benchmark which test the performance of CPU and memory.<br>
+	Test cases executed by this tool:multicore_unixbench<br><br>
+	
+       19. <a href="#"><b>Unzip</b></a>: This tool is to measure the time required to extract the tar.gz file.<br><br>
+
+        20. <a href="#"><b>Nginx</b></a>: Nginx tool is mainly used to measure the web server performance. <br>
+            Test cases executed by this tool: nginx_32_core_local_wrps, nginx_32_core_cross_wrps and nginx_64_core_wrps<br><br>
+
+        21. <a href="#"><b>Redis</b></a>: Redis tool evaluate the performance of database. Redis works with an in-memory dataset.<br>
+            Test cases executed by this tool: redis_Instance_#<br><br>
+
+        22. <a href="#"><b>Netperf</b></a> : Netperf is a benchmark that can be used to measure various aspects of networking performance. <br>
+	 Test cases executed by this tool: TCP_RR, TCP_stream_r, TCP_CRR, TCP_stream and UDP_RR<br><br>
+	 
+
+         23. <a href="#"><b>Iperf </b></a>:   Iperf is a commonly-used network testing tool that can create Transmission Control Protocol (TCP) and User Datagram Protocol (UDP). <br> 
+	 Test cases executed by this tool: TCP_s#_RX and TCP_s#_TX<br><br>
+	 
+
+	 24. <a href="#"><b>Qperf</b></a>: qperf measures bandwidth and latency between two nodes. It can work over TCP/IP as well as the RDMA transports.<br>
+	 Test cases executed by this tool: TCP_bw_#B and TCP_lat_#B <br><br>
+	 
+   </p>	
     </div>
 </div>
 {% endblock content%}
