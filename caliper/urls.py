@@ -23,25 +23,26 @@ from compare import views as compare_views
 from assign import views as assign_views
 
 urlpatterns = [
-    url(r'^$',login_views.main,name='main'),
-    url(r'^createuser$',login_views.userIntoCaliperDB,name='createuser'),
-    
+    url(r'^$', login_views.main, name='main'),
+    url(r'^createuser$', login_views.userIntoCaliperDB, name='createuser'),
+
     url(r'^login_verify$', login_views.login_verify, name='login_verify'),
     url(r'^downloadfile$', login_views.file_Download, name='downloadfile'),
 
-    url(r'^task$',task_views.home,name='home'),
-    url(r'^task/(\w+)/$',task_views.result,name='result'),
-    url(r'^ajax_showresult$',task_views.ajax_showresult,name='ajax_showresult'),
+    url(r'^task$', task_views.home, name='home'),
+    url(r'^task/(\w+)/$', task_views.result, name='result'),
+    url(r'^task/(\w+)/(\w+)$', task_views.tool_result, name='tool_result'),
+    url(r'^ajax_showresult$', task_views.ajax_showresult, name='ajax_showresult'),
     url(r'^downloadresult/(.+)$', task_views.result_Download, name='downloadresult'),
-    url(r'^test_post$',task_views.test_post,name='test_post'),
-    url(r'^save_data$',task_views.save_data,name='save_data'),
+    url(r'^test_post$', task_views.test_post, name='test_post'),
+    url(r'^save_data$', task_views.save_data, name='save_data'),
 
-    url(r'^compare$',compare_views.compare,name='compare'),
-    url(r'^compare/(\w+)/$',compare_views.test_aspect,name='test_aspect'),
+    url(r'^compare$', compare_views.compare, name='compare'),
+    url(r'^compare/(\w+)/$', compare_views.test_aspect, name='test_aspect'),
 
-    url(r'^assign$',assign_views.assign,name='assign'),
+    url(r'^assign$', assign_views.assign, name='assign'),
 
     url(r'^admin/', admin.site.urls),
     url(r'static/(?P<path>.*)$', serve,
-            {'document_root': settings.STATIC_ROOT}, name='static'),
+        {'document_root': settings.STATIC_ROOT}, name='static'),
 ]

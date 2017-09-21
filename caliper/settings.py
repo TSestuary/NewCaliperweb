@@ -94,7 +94,7 @@ DATABASES = {
         'NAME': 'calipernewdb',
         'USER': 'caliperuser',
         'PASSWORD': 'caliperts',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.64.157',
         # 'HOST': '192.168.64.59',
         'PORT': '',
     }

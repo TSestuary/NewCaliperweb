@@ -8,6 +8,7 @@ class Task(models.Model):
     name = models.CharField(max_length=200)
     configuration = JSONField()
     results = JSONField()
+    raw_results = JSONField()
     output_path = models.CharField(max_length=500)
     time = models.DateTimeField(auto_now_add=True)
 

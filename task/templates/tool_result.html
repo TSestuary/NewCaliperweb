@@ -3,11 +3,8 @@
 
 {% block content %}
 <div class="row">
-<div id="result" class="col-lg-4"></div>
-<div class="col-lg-7">
-    <h4 id="result_name"></h4>
-    <textarea id="text_area" rows="30" cols="120" spellcheck="false" readonly="readonly"> </textarea>
-</div>
+    <h4>{{ fileName }}</h4>
+    <pre>{{ filecontent }}</pre>
 </div>
 {% endblock content%}
 
@@ -21,7 +18,7 @@
         var endstr = ".tar.gz";
         for (index in result_files){
             console.log(result_files[index]);
-            file=result_files[index].logPath;
+            file=result_files[index];
             if(file.indexOf("/home")==0){
                 name=file.split("/output/")[1];
             }else{
